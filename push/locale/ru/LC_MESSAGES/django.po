@@ -1,0 +1,421 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Yura Zemskov <zemskyura@gmail.com>, 2019.
+#
+# cd push/
+# django-admin makemessages -a --extension html,txt,py,js
+# django-admin compilemessages
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-02-27 10:52+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: admin.py:94
+#, python-format
+msgid "Successfully activated %(count)d task."
+msgid_plural "Successfully activated %(count)d tasks."
+msgstr[0] "Успешно включено %(count)d задание."
+msgstr[1] "Успешно включено %(count)d заданий."
+
+#: admin.py:100
+#, python-format
+msgid "Successfully deactivated %(count)d task."
+msgid_plural "Successfully deactivated %(count)d tasks."
+msgstr[0] "Успешно выключено %(count)d задание."
+msgstr[1] "Успешно выключено %(count)d заданий."
+
+#: admin.py:108
+msgid "Deactivate selected tasks"
+msgstr "Выключить выбранные задания"
+
+#: admin.py:112
+msgid "Activate selected tasks"
+msgstr "Включить выбранные задания"
+
+#: filters.py:13
+msgid "already sent?"
+msgstr "уже разослали?"
+
+#: forms.py:24
+#, python-format
+msgid ""
+"\n"
+"            Push icon.\n"
+"            Minimum %(min_w)dx%(min_h)d px,\n"
+"            %(ratio_w)d:%(ratio_h)d aspect ratio.\n"
+"            Optional (default icon will be used).\n"
+"            "
+msgstr ""
+"\n"
+"            Иконка пуша.\n"
+"            Минимум %(min_w)dx%(min_h)d px,\n"
+"            соотношение сторон %(ratio_w)d:%(ratio_h)d.\n"
+"            Необязательно (будет иконка по умолчанию).\n"
+"            "
+
+#: forms.py:37
+#, python-format
+msgid ""
+"\n"
+"            Big image for push in Chrome.\n"
+"            Minimum %(min_w)dx%(min_h)d px,\n"
+"            %(ratio_w)d:%(ratio_h)d aspect ratio.\n"
+"            Optional (if so, there will be no big image).\n"
+"            "
+msgstr ""
+"\n"
+"            Большая картинка для пуша в Chrome.\n"
+"            Минимум %(min_w)dx%(min_h)d px,\n"
+"            соотношение сторон %(ratio_w)d:%(ratio_h)d.\n"
+"            Необязательно (не будет).\n"
+"            "
+
+#: forms.py:91
+#, python-format
+msgid "File size can't exceed %(max_size)s. This image is %(img_size)s."
+msgstr ""
+"Размер файла должен быть не больше %(max_size)s. Эта картинка %(img_size)s."
+
+#: forms.py:106
+msgid "Image format doesn't match file extension. Please use another image."
+msgstr ""
+"Формат картинки и расширение файла не совпадают, используйте другую картинку."
+
+#: forms.py:115
+#, python-format
+msgid "Image width must be minimum %(min_w)d px, this is %(w)d px."
+msgstr "Ширина картинки должна быть минимум %(min_w)d px, у вас %(w)d px."
+
+#: forms.py:118
+#, python-format
+msgid " Image height must be minimum %(min_h)d px, this is %(h)d px."
+msgstr " Высота картинки должна быть минимум %(min_h)d px, у вас %(h)d px."
+
+#: forms.py:125
+#, python-format
+msgid " Wrong aspect ratio, %(w_ratio)d:%(h_ratio)d needed."
+msgstr " Неправильное соотношение сторон, нужно %(w_ratio)d:%(h_ratio)d."
+
+#: forms.py:143
+msgid ""
+"You can't send pushes more than once per 6 hours.                   Please "
+"select another date and time."
+msgstr ""
+"Нельзя отправлять уведомления чаще чем раз в 6 часов.                   "
+"Пожалуйста выберите другую дату отправки."
+
+#: forms.py:169
+#, python-format
+msgid "Link must belong to one of your domains: %(domains)s."
+msgstr "Ссылка должна быть на одном из ваших доменов: %(domains)s."
+
+#: forms.py:178
+#, python-format
+msgid "Erroneous HTTP %(response_code)d response from url."
+msgstr "Ошибочный код ответа сервера: %(response_code)d."
+
+#: forms.py:183
+#, python-format
+msgid "Got error while trying to access url: %(error_txt)s."
+msgstr "Ошибка при попытке проверить работоспособность ссылки: %(error_txt)s."
+
+#: models.py:31 models.py:61
+msgid "endpoint"
+msgstr "идентификатор"
+
+#: models.py:32
+msgid "key"
+msgstr "публичный ключ"
+
+#: models.py:33
+msgid "auth secret"
+msgstr ""
+
+#: models.py:34
+msgid "is active"
+msgstr "активна"
+
+#: models.py:35
+msgid "send errors"
+msgstr "ошибок отправки"
+
+#: models.py:36
+msgid "useragent"
+msgstr "браузер"
+
+#: models.py:38 models.py:393
+msgid "timezone"
+msgstr "часовой пояс"
+
+#: models.py:42 models.py:222
+msgid "created"
+msgstr "создана"
+
+#: models.py:43
+msgid "activated"
+msgstr "активирована"
+
+#: models.py:44
+msgid "deactivated"
+msgstr "деактивирована"
+
+#: models.py:188
+msgid "push subscription"
+msgstr "push-подписка"
+
+#: models.py:189
+msgid "push subscriptions"
+msgstr "push-подписки"
+
+#: models.py:192
+#, python-format
+msgid "subscription ID %(pk)d"
+msgstr "подписка ID %(pk)d"
+
+#: models.py:206
+msgid "title"
+msgstr "заголовок"
+
+#: models.py:207
+msgid "message"
+msgstr "соощение"
+
+#: models.py:209
+msgid "url"
+msgstr "ссылка"
+
+#: models.py:210
+msgid ""
+"If there is no from param in url, ?from=push will be added automatically."
+msgstr "Если в ссылке не указан источник, ?from=push добавится автоматически."
+
+#: models.py:213
+msgid "active"
+msgstr "включено"
+
+#: models.py:214
+msgid "Is it an active task that should be done, or a draft."
+msgstr "Надо ли выполнять или это пока черновик задания."
+
+#: models.py:216
+msgid "views"
+msgstr "показы"
+
+#: models.py:217
+msgid "clicks"
+msgstr "клики"
+
+#: models.py:219
+msgid "closings"
+msgstr "закрытия"
+
+#: models.py:220
+msgid "When user closes the notification."
+msgstr "Отказы, когда пользователь закрывает уведомление."
+
+#: models.py:224 models.py:397
+msgid "run at"
+msgstr "когда рассылать"
+
+#: models.py:225
+msgid ""
+"Send time here is set according to subscriber's timezone! Also you can "
+"postpone sending."
+msgstr ""
+"Время рассылки выставляется здесь в соответствии с часовым поясом "
+"подписчика! Также можно отложить рассылку на будущее."
+
+#: models.py:228 models.py:398
+msgid "started at"
+msgstr "начато"
+
+#: models.py:229
+msgid "When we started to send this task."
+msgstr "Когда начато проведение этой рассылки."
+
+#: models.py:232 models.py:399
+msgid "done at"
+msgstr "сделано"
+
+#: models.py:233
+msgid "When work on this task has been done."
+msgstr "Когда закончено проведение рассылки."
+
+#: models.py:240
+msgid "push task"
+msgstr "задание рассылки"
+
+#: models.py:241
+msgid "push tasks"
+msgstr "задания рассылки"
+
+#: models.py:256
+msgid "done"
+msgstr "сделано"
+
+#: models.py:265
+msgid "CTR"
+msgstr "CTR"
+
+#: models.py:274
+#, python-format
+msgid "%(num_closings)d times users rejected this notification"
+msgstr "%(num_closings)d закрытий уведомления пользователями"
+
+#: models.py:279
+msgid "rejections"
+msgstr "отказы"
+
+#: models.py:291
+msgid "run for"
+msgstr "рассылалось"
+
+#: models.py:409
+#, python-format
+msgid "%(timezone)s tz sub-task for %(task)s"
+msgstr "%(timezone)s подзадание для %(task)s"
+
+#: templates/admin/push/change_list.html:10
+#, python-format
+msgid ""
+"\n"
+"                <strong>This page</strong> totals: %(views)s notification\n"
+"                views and %(clicks)s clicks with the average CTR %(ctr)s.\n"
+"                Rejections are %(closings_percent)s or %(closings)s times.\n"
+"            "
+msgstr ""
+"\n"
+"                Всего на <strong>этой странице</strong> %(views)s показов и\n"
+"                %(clicks)s кликов при среднем CTR %(ctr)s.\n"
+"                Отказы составили %(closings_percent)s или %(closings)s раз.\n"
+"            "
+
+#: templates/push/_head_include.html:11 templates/push/_on_off_txt.html:13
+msgid "Turn push notifications on"
+msgstr "Включить уведомления от этого сайта"
+
+#: templates/push/_head_include.html:12
+msgid "Turn push notifications off"
+msgstr "Отключить уведомления от этого сайта"
+
+#: templates/push/_info_disable_title.html:2
+msgid "How to unsubscribe from push-notifications"
+msgstr "Как отписаться от push-уведомлений"
+
+#: templates/push/_info_disable_txt.html:4
+msgid ""
+"Select a browser in which you receive notifications\n"
+"from the site, and follow the instructions below."
+msgstr ""
+"Выберите браузер (программу для просмотра интернета), в котором вам\n"
+"приходят уведомления от сайта, и действуйте по инструкции ниже."
+
+#: templates/push/_info_disable_txt.html:7
+#: templates/push/_info_disable_txt.html:15
+msgid "Chrome"
+msgstr ""
+
+#: templates/push/_info_disable_txt.html:9
+#: templates/push/_info_disable_txt.html:21
+msgid ""
+"<b>1.</b> Click the green (or grey) lock next to the\n"
+"&laquo;https://&raquo; in the address bar of the browser."
+msgstr ""
+"<b>1.</b> Кликните на зеленый (или серый) замок рядом с надписью\n"
+"&laquo;https://&raquo; в адресной строке браузера."
+
+#: templates/push/_info_disable_txt.html:12
+msgid ""
+"<b>2.</b> Select &laquo;Block&raquo; for\n"
+"&laquo;Notifications&raquo;."
+msgstr ""
+"<b>2.</b> Выберите &laquo;Блокировать&raquo; для\n"
+"пункта &laquo;Уведомления&raquo;."
+
+#: templates/push/_info_disable_txt.html:19
+#: templates/push/_info_disable_txt.html:27
+msgid "Firefox"
+msgstr ""
+
+#: templates/push/_info_disable_txt.html:24
+msgid ""
+"<b>2.</b> Under &laquo;Permissions&raquo;\n"
+"click on (X) near &laquo;Send Notifications Allowed&raquo;."
+msgstr ""
+"<b>2.</b> В разделе &laquo;Разрешения&raquo;\n"
+"нажмите на (X) напротив пункта &laquo;Отправлять уведомления "
+"Разрешено&raquo;."
+
+#: templates/push/_info_disable_txt.html:31
+#: templates/push/_info_disable_txt.html:36
+#: templates/push/_info_disable_txt.html:42
+#: templates/push/_info_disable_txt.html:49
+msgid "Chrome for Android"
+msgstr "Chrome для Android"
+
+#: templates/push/_info_disable_txt.html:33
+msgid ""
+"<b>1.</b> Tap the green (or grey) lock next to the\n"
+"&laquo;https://&raquo; in the address bar of the browser."
+msgstr ""
+"<b>1.</b> Нажмите на зеленый (или серый) замок рядом с надписью\n"
+"&laquo;https://&raquo; в адресной строке браузера."
+
+#: templates/push/_info_disable_txt.html:40
+msgid "<b>2.</b> Tap &laquo;Site settings&raquo;:"
+msgstr "<b>2.</b> Нажмите &laquo;Настройки сайта&raquo;:"
+
+#: templates/push/_info_disable_txt.html:46
+msgid ""
+"<b>3.</b> Tap &laquo;Notifications&raquo;\n"
+"and select &laquo;Block&raquo;:"
+msgstr ""
+"<b>3.</b> Нажмите &laquo;Уведомления&raquo;\n"
+"и выберите &laquo;Блокировать&raquo;:"
+
+#: templates/push/_on_off_title.html:2
+msgid "Web-push from this site in your browser"
+msgstr "Настройка уведомлений в браузере"
+
+#: templates/push/_on_off_txt.html:3
+msgid ""
+"Here you can turn on or off push-notifications from this\n"
+"web-site in your browser."
+msgstr ""
+"На этой странице вы можете включить или выключить уведомления от нашего\n"
+"сайта в своем браузере."
+
+#: templates/push/_on_off_txt.html:6
+msgid ""
+"Important note: if you are on this page \n"
+"<b>to unsubscribe</b> from notifications from the site,\n"
+"then to click on the button below you need <b>the same browser</b>,\n"
+"in which you receive notifications."
+msgstr ""
+"Важно: если вы зашли на эту страницу, <b>чтобы отписаться</b> от \n"
+"уведомлений с сайта, то открывать эту страницу и нажимать на кнопку ниже "
+"нужно \n"
+"<b>обязательно в том же браузере</b> (программе для просмотра интернета), \n"
+"в котором вам приходят уведомления."
+
+#: templates/push/service-worker.js:110
+msgid "Error occurred"
+msgstr "Произошла ошибка"
+
+#: templates/push/service-worker.js:111
+msgid "We were unable to get information for this push message"
+msgstr "Не удалось получить уведомление с сайта"

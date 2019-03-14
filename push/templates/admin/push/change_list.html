@@ -1,0 +1,17 @@
+{% extends 'admin/change_list.html' %}
+{% load humanize i18n %}
+
+
+{% block result_list %}
+    {{ block.super }}
+    
+    {% if cl.totals %}
+        <p class="paginator">
+            {% blocktrans with views=cl.totals.total_views|default:'0'|intcomma clicks=cl.totals.total_clicks|default:'0'|intcomma ctr=cl.totals.avg_ctr closings_percent=cl.totals.avg_closings closings=cl.totals.total_closings|default:'0'|intcomma %}
+                <strong>This page</strong> totals: {{ views }} notification
+                views and {{ clicks }} clicks with the average CTR {{ ctr }}.
+                Rejections are {{ closings_percent }} or {{ closings }} times.
+            {% endblocktrans %}
+        </p>
+    {% endif %}
+{% endblock %}

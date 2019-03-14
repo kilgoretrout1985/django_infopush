@@ -1,0 +1,15 @@
+{% load i18n %}
+
+<p>{% blocktrans %}Here you can turn on or off push-notifications from this
+web-site in your browser.{% endblocktrans %}</p>
+
+<p>{% blocktrans %}Important note: if you are on this page 
+<b>to unsubscribe</b> from notifications from the site,
+then to click on the button below you need <b>the same browser</b>,
+in which you receive notifications.{% endblocktrans %}</p>
+
+<p>
+    <button class="js-push-button" disabled>
+        {% trans 'Turn push notifications on' %}
+    </button>
+</p>

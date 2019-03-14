@@ -1,0 +1,51 @@
+{% load i18n staticfiles %}
+
+
+<p>{% blocktrans %}Select a browser in which you receive notifications
+from the site, and follow the instructions below.{% endblocktrans %}</p>
+
+<h3>{% trans "Chrome" %}</h3>
+
+<p>{% blocktrans %}<b>1.</b> Click the green (or grey) lock next to the
+&laquo;https://&raquo; in the address bar of the browser.{% endblocktrans %}</p>
+
+<p>{% blocktrans %}<b>2.</b> Select &laquo;Block&raquo; for
+&laquo;Notifications&raquo;.{% endblocktrans %}</p>
+
+<p><img alt="{% trans "Chrome" %}"
+    src="{% static 'push/img/chrome_disable.png' %}"
+    style="max-width: 50%; height: auto;" /></p>
+
+<h3>{% trans "Firefox" %}</h3>
+
+<p>{% blocktrans %}<b>1.</b> Click the green (or grey) lock next to the
+&laquo;https://&raquo; in the address bar of the browser.{% endblocktrans %}</p>
+
+<p>{% blocktrans %}<b>2.</b> Under &laquo;Permissions&raquo;
+click on (X) near &laquo;Send Notifications Allowed&raquo;.{% endblocktrans %}</p>
+
+<p><img alt="{% trans "Firefox" %}"
+    src="{% static 'push/img/ff_disable.png' %}"
+    style="max-width: 50%; height: auto;" /></p>
+
+<h3>{% trans "Chrome for Android" %}</h3>
+
+<p>{% blocktrans %}<b>1.</b> Tap the green (or grey) lock next to the
+&laquo;https://&raquo; in the address bar of the browser.{% endblocktrans %}</p>
+
+<p><img alt="{% trans "Chrome for Android" %} 1"
+    src="{% static 'push/img/chrome_android_disable_1.png' %}"
+    style="max-width: 50%; height: auto;" /></p>
+
+<p>{% blocktrans %}<b>2.</b> Tap &laquo;Site settings&raquo;:{% endblocktrans %}</p>
+
+<p><img alt="{% trans "Chrome for Android" %} 2"
+    src="{% static 'push/img/chrome_android_disable_2.png' %}"
+    style="max-width: 50%; height: auto;" /></p>
+
+<p>{% blocktrans %}<b>3.</b> Tap &laquo;Notifications&raquo;
+and select &laquo;Block&raquo;:{% endblocktrans %}</p>
+
+<p><img alt="{% trans "Chrome for Android" %} 3"
+    src="{% static 'push/img/chrome_android_disable_3.png' %}"
+    style="max-width: 50%; height: auto;" /></p>

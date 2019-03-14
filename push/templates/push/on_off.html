@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <h1>{% include 'push/_on_off_title.html' %}</h1>
+    
+    {% include 'push/_on_off_txt.html' %}
+{% endblock %}
+
+
+{% block title %}
+    {% include 'push/_on_off_title.html' %}
+{% endblock %}
+
+
+{% block add_meta %}
+    {{ block.super }}
+    <meta name="robots" content="noindex,nofollow" />
+{% endblock %}
