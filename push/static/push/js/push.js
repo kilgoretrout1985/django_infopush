@@ -51,7 +51,7 @@
                 push_save_on_server(subscription);
                 // Set your UI to show they have subscribed for push messages
                 if (pushButton) {
-                    pushButton.textContent = django_push_js_dynamic_vars.off_button_label;
+                    pushButton.textContent = django_infopush_js_dynamic_vars.off_button_label;
                     push_is_enabled = true;
                 }
             } else if (!pushButton && !getCookie('push_dnd')) {
@@ -86,7 +86,7 @@
             // The subscription was successful
             if(pushButton) {
                 push_is_enabled = true;
-                pushButton.textContent = django_push_js_dynamic_vars.off_button_label;
+                pushButton.textContent = django_infopush_js_dynamic_vars.off_button_label;
                 pushButton.disabled = false;
             }
             // Send the subscription id to your server  
@@ -111,7 +111,7 @@
                 console.error('Unable to subscribe to push.', e);
                 if(pushButton) {
                     pushButton.disabled = false;
-                    pushButton.textContent = django_push_js_dynamic_vars.on_button_label;
+                    pushButton.textContent = django_infopush_js_dynamic_vars.on_button_label;
                 }
             }
         });
@@ -190,7 +190,7 @@
         if (auth_secret !== '') { data.append('auth_secret', auth_secret); }
         if (timezone) { data.append('timezone', timezone); }
         var csrftoken = getCookie('csrftoken');
-        var request = new Request(django_push_js_dynamic_vars.save_url, {
+        var request = new Request(django_infopush_js_dynamic_vars.save_url, {
             'method': 'POST',
             'cache': 'no-cache',
             'body': data,
@@ -218,7 +218,7 @@
         var data = new FormData();
         data.append('endpoint', find_endpoint(subscription));
         var csrftoken = getCookie('csrftoken');
-        var request = new Request(django_push_js_dynamic_vars.deactivate_url, {
+        var request = new Request(django_infopush_js_dynamic_vars.deactivate_url, {
             'method': 'POST',
             'cache': 'no-cache',
             'body': data,
@@ -259,7 +259,7 @@
                 // to allow the user to subscribe to push  
                 push_is_enabled = false;
                 pushButton.disabled = false;
-                pushButton.textContent = django_push_js_dynamic_vars.on_button_label;
+                pushButton.textContent = django_infopush_js_dynamic_vars.on_button_label;
                 throw new Error('No subscription object to unsubscribe');
             }
             
@@ -276,7 +276,7 @@
                 push_deactivate_on_server(subscription);
                 setCookie('push_dnd', '1', {expires: 365*86400, path: '/'});
                 pushButton.disabled = false;
-                pushButton.textContent = django_push_js_dynamic_vars.on_button_label;
+                pushButton.textContent = django_infopush_js_dynamic_vars.on_button_label;
                 push_is_enabled = false;
             } else {
                 // We failed to unsubscribe, this can lead to  

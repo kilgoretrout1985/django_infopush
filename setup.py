@@ -11,7 +11,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 
 setup(
-    name='django_push',
+    name='django_infopush',
     version='1.6.5',
     packages=['push'],
     include_package_data=True,

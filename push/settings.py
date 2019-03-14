@@ -35,5 +35,5 @@ ERROR_THRESHOLD = int(getattr(settings, 'DJANGO_PUSH_ERROR_THRESHOLD', 30))
 # do not change, it is here for easy import of this constant
 FCM_URL = 'https://android.googleapis.com/gcm/send'
 
-# this setting allows to disable CSRF for django_push views only, if needed
+# this setting allows to disable CSRF for django_infopush views only, if needed
 USE_CSRF = bool(getattr(settings, 'DJANGO_PUSH_USE_CSRF', True))

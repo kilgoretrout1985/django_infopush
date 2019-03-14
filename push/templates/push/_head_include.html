@@ -5,7 +5,7 @@
 {# to have CSRF-cookie available for JS POST-request #}
 <!-- {% csrf_token %} -->
 <script type="text/javascript">
-    var django_push_js_dynamic_vars = {
+    var django_infopush_js_dynamic_vars = {
         save_url: "{% url 'push_save' %}",
         deactivate_url: "{% url 'push_deactivate' %}",
         on_button_label: "{% trans 'Turn push notifications on' %}",
@@ -13,4 +13,4 @@
     };
 </script>
 <script defer type="text/javascript" src="{% static 'push/js/jstz.min.js' %}?1" charset="utf-8"></script>
-<script defer type="text/javascript" src="{% static 'push/js/push.js' %}?53" charset="utf-8"></script>
+<script defer type="text/javascript" src="{% static 'push/js/push.js' %}?54" charset="utf-8"></script>

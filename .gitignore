@@ -4,6 +4,6 @@
 .svn
 __pycache__
 dist
-django_push.egg-info/
-django_push.komodoproject
+django_infopush.egg-info/
+django_infopush.komodoproject
 0_copy.sh

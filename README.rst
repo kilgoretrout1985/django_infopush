@@ -10,7 +10,7 @@ Detailed documentation is in the "docs" directory.
 Quick start
 -----------
 
-1. `pip install ~/python/django_push/dist/django_push-1.6.5.tar.gz`
+1. `pip install django_infopush`
 
 2. Add "push" to your INSTALLED_APPS setting like this::
 
@@ -22,7 +22,7 @@ Quick start
 3. Enable sites framework in Django, see `official docs
    <https://docs.djangoproject.com/en/1.11/ref/contrib/sites/#enabling-the-sites-framework>`_.
 
-4. Configure django_push in settings.py (see docs/SETTINGS.txt).
+4. Configure django_infopush in settings.py (see docs/SETTINGS.txt).
 
 5. Run `python manage.py migrate` to create push models.
 
