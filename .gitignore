@@ -6,4 +6,4 @@ __pycache__
 dist
 django_push.egg-info/
 django_push.komodoproject
-setup.sh
+0_copy.sh
