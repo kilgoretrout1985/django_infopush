@@ -1,0 +1,9 @@
+*.pyc
+*.pyo
+*.log
+.svn
+__pycache__
+dist
+django_push.egg-info/
+django_push.komodoproject
+setup.sh

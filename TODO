@@ -1,0 +1,6 @@
+* кешировать инфу о +1 просмотров и кликов заданий, скидывать изредка, чтобы снизить нагрузку на БД
+- как-то защитить notification_plus_one view от подделки данных запросами (или забить?)
+
+* Переход на VAPID?
+https://rossta.net/blog/using-the-web-push-api-with-vapid.html
+https://developers.google.com/web/updates/2016/07/web-push-interop-wins
