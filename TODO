@@ -1,6 +1,8 @@
-* кешировать инфу о +1 просмотров и кликов заданий, скидывать изредка, чтобы снизить нагрузку на БД
-- как-то защитить notification_plus_one view от подделки данных запросами (или забить?)
-
-* Переход на VAPID?
+1) Switch to VAPID
 https://rossta.net/blog/using-the-web-push-api-with-vapid.html
 https://developers.google.com/web/updates/2016/07/web-push-interop-wins
+
+2) Maybe defend notification_plus_one view from request forgery and add cache
+to it to lower impact on DB.
+
+3) Maybe change from CRON + management command to some hipster stuff.
