@@ -76,7 +76,7 @@ icons for the "shortcut" (list of strings).
 
 Only PNG, square. Several identical icons in different sizes.
 192*192, 512*512, Read more `here
-<https://developers.google.com/web/updates/2014/11/Support-for-installable-web-apps-with-webapp-manifest-in-chrome-38-for-Android>`_..
+<https://developers.google.com/web/updates/2014/11/Support-for-installable-web-apps-with-webapp-manifest-in-chrome-38-for-Android>`_.
 
 Default is `["push/img/app_icon.png"]`. It is better to change on your own,
 this is very common.
