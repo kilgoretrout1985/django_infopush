@@ -46,8 +46,4 @@ Quick start
 
 9. CRON setup for pushsend management command (every 5-10 minutes).
 
-10. (OPTOINAL) Run::
-
-    python manage.py test push
-    
-for basic check of the app. 
+10. (OPTIONAL) Run `python manage.py test push` for basic check of the app.
