@@ -22,7 +22,7 @@ Quick start
 3. Enable sites framework in Django, see `official docs
    <https://docs.djangoproject.com/en/1.11/ref/contrib/sites/#enabling-the-sites-framework>`_.
 
-4. Configure django_infopush in settings.py (see docs/SETTINGS.txt).
+4. Configure django_infopush in settings.py (see docs/SETTINGS.rst).
 
 5. Run `python manage.py migrate` to create push models.
 
