@@ -42,6 +42,12 @@ Quick start
    django-project's html template(s). Do not include it on the pages where you
    don't want to see push-subscribe browser window.
 
-8. Visit http://127.0.0.1:8000/ to check everything is working.
+8. Visit http://127.0.0.1:8000/admin/push/ to check everything is working.
 
 9. CRON setup for pushsend management command (every 5-10 minutes).
+
+10. (OPTOINAL) Run::
+
+    python manage.py test push
+    
+for basic check of the app. 
