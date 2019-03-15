@@ -8,12 +8,9 @@ subscriptions and send web push notifications to browsers.
 **It is a full featured reusable app which includes::**
 
 * frontend & backend code which gathers push subscriptions and saves them to DB,
-* service worker to show notifications, manage clicks and basic notification
-statistics,
-* django admin interface where you create new push tasks (title, text, icon,
-url, image, time to send),
-* django management command to perform your tasks (send notifications to
-subscribers).
+* service worker to show notifications, manage clicks and basic notification statistics,
+* django admin interface where you create new push tasks (title, text, icon, url, image, time to send),
+* django management command to perform your tasks (send notifications to subscribers).
 
 This app covers 99% webpush needs for content web-sites than you just want
 to send an announcement of a new blog post for example. Just make a new push
@@ -25,13 +22,8 @@ those who need the ability to send individual pushes to each subscriber.
 * django_infopush works on Python 3 only (2.7 support will be added).
 * Tested only on Django 1.11 LTS.
 * Like any webpush app it requires you website to work on SSL (httpS://).
-* You better have access to CRON on your server, because push tasks are send
-using `python manage.py pushsend` management command. And running it manually
-every time sounds like a bad idea. Although for testing purposes manual calls
-will do well.
-* django_infopush currently uses Google FCM, not VAPID. If you do not know what
-it means, let's say VAPID is the future ot webpush, and FCM is the past, which
-nevertheless works fine. VAPID support will be added someday.
+* You better have access to CRON on your server, because push tasks are send using `python manage.py pushsend` management command. And running it manually every time sounds like a bad idea. Although for testing purposes manual calls will do well.
+* django_infopush currently uses Google FCM, not VAPID. If you do not know what it means, let's say VAPID is the future ot webpush, and FCM is the past, which nevertheless works fine. VAPID support will be added someday.
 
 Quick start
 -----------
