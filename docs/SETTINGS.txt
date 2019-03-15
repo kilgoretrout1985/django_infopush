@@ -1,57 +1,57 @@
                 ОБЯЗАТЕЛЬНЫЕ ПАРАМЕТРЫ
 
-DJANGO_PUSH_FCM_SERVER_KEY
+DJANGO_INFOPUSH_FCM_SERVER_KEY
 Ключ для Google Cloud Messaging (str).
 Получается по инструкции https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web#make_a_project_on_the_firebase_developer_console
 
-DJANGO_PUSH_FCM_SENDER_ID
+DJANGO_INFOPUSH_FCM_SENDER_ID
 Идентификатор в Google Cloud Messaging (str).
 Получается по инструкции https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web#make_a_project_on_the_firebase_developer_console
 
                 НЕОБЯЗАТЕЛЬНЫЕ ПАРАМЕТРЫ
 
-DJANGO_PUSH_DEFAULT_ICON_URL
+DJANGO_INFOPUSH_DEFAULT_ICON_URL
 Относительный (от домена) www-путь до иконки уведомления, которая используется по умолчанию (str).
 Подойдет JPG, PNG, GIF (анимация не работает, берется 1-ый кадр), квадратная.
 По умолчанию "/static/push/img/icon.png"
 
-DJANGO_PUSH_MIN_ICON_W
+DJANGO_INFOPUSH_MIN_ICON_W
 Минимальная ширина иконки пуша (int, по умолчанию 192).
 
-DJANGO_PUSH_MIN_ICON_H
+DJANGO_INFOPUSH_MIN_ICON_H
 Минимальная высота иконки пуша (int, по умолчанию 192).
 
-DJANGO_PUSH_ICON_CUSTOM_MAX_FILESIZE
+DJANGO_INFOPUSH_ICON_CUSTOM_MAX_FILESIZE
 Максимальный размер кастомной иконки уведомления (можно прицепить свою к каждому уведомлению).
 В килобайтах (int, по умолчанию 25).
 
-DJANGO_PUSH_MIN_BIG_IMAGE_W
+DJANGO_INFOPUSH_MIN_BIG_IMAGE_W
 Минимальная ширина большой картинки для пуша в Chrome. (int, по умолчанию 1023).
 Подробнее: https://web-push-book.gauntface.com/chapter-05/02-display-a-notification/#image
 
-DJANGO_PUSH_MIN_BIG_IMAGE_H
+DJANGO_INFOPUSH_MIN_BIG_IMAGE_H
 Минимальная высота большой картинки для пуша в Chrome. (int, по умолчанию 682).
 
-DJANGO_PUSH_BIG_IMAGE_MAX_FILESIZE
+DJANGO_INFOPUSH_BIG_IMAGE_MAX_FILESIZE
 Максимальный размер большой картинки уведомления (можно прицепить свою к каждому уведомлению).
 В килобайтах (int, по умолчанию 100).
 
-DJANGO_PUSH_APP_ICON_URLS
+DJANGO_INFOPUSH_APP_ICON_URLS
 Web-push требует наличия manifest.json, в котором мы также конфигурируем веб-приложение, чтобы из Chrome на Android можно было сохранить "ярлык" на сайт на рабочий стол. Этот массив путей ОТНОСИТЕЛЬНО django static-dir будет иконками для "ярлыка" (str).
 Только PNG, квадратная. Несколько одинаковых иконок в разных рамерах (192*192, 512*512, см доки).
 По умолчанию ["push/img/app_icon.png"]. Лучше поменять на свои, эта очень общая.
 Подробнее: https://developers.google.com/web/updates/2014/11/Support-for-installable-web-apps-with-webapp-manifest-in-chrome-38-for-Android 
 
-DJANGO_PUSH_APP_BACKGROUND_COLOR
+DJANGO_INFOPUSH_APP_BACKGROUND_COLOR
 При запуске "приложения"-сайта с рабочего стола может использоваться экран-заставка. Задаем фон этого экрана, например #CCCCCC (str, по умолчанию None, не используется).
 Подробнее: https://developers.google.com/web/updates/2015/10/splashscreen
 
-DJANGO_PUSH_APP_THEME_COLOR
+DJANGO_INFOPUSH_APP_THEME_COLOR
 Код цвета, чтобы "брендировать" браузер (мобильный Chrome) под сайт. Например #CCCCCC (str, по умолчанию None, не используется).
 Подробнее: https://developers.google.com/web/updates/2015/08/using-manifest-to-set-sitewide-theme-color
 
-DJANGO_PUSH_ERROR_THRESHOLD
+DJANGO_INFOPUSH_ERROR_THRESHOLD
 Количество ошибок, после которого отключаем push-подписку (int, по умолчанию 30).
 
-DJANGO_PUSH_USE_CSRF
+DJANGO_INFOPUSH_USE_CSRF
 Позволяет отключить проверку CSRF в push-вьюхах. Иногда бывает необходимо (bool, по умолчанию True - CSRF работает).
