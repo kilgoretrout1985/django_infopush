@@ -6,3 +6,5 @@ https://developers.google.com/web/updates/2016/07/web-push-interop-wins
 to it to lower impact on DB.
 
 3) Maybe change from CRON + management command to some hipster stuff.
+
+4) Python 2.7 backward compatibility.
