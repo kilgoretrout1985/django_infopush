@@ -5,7 +5,7 @@ django_infopush
 django_infopush is a Django reusable app, that allows to gather push
 subscriptions and send web push notifications to browsers.
 
-**It is a full featured reusable app which includes::**
+**It is a full featured reusable app which includes:**
 
 * frontend & backend code which gathers push subscriptions and saves them to DB,
 * service worker to show notifications, manage clicks and basic notification statistics,
@@ -17,7 +17,7 @@ to send an announcement of a new blog post for example. Just make a new push
 task in the admin and job is done. For the same reason this app will not suite
 those who need the ability to send individual pushes to each subscriber.
 
-**Known limitations are::**
+**Known limitations are:**
 
 * django_infopush works on Python 3 only (2.7 support will be added).
 * Tested only on Django 1.11 LTS.
