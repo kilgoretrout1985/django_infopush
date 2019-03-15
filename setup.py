@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
-
-from setuptools import setup
+import setuptools
 
 
 README = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
@@ -10,20 +9,22 @@ README = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 
-setup(
+setuptools.setup(
     name='django_infopush',
     version='1.6.5',
-    packages=['push'],
+    packages=setuptools.find_packages(),  # ['push'],
     include_package_data=True,
-    license='WTFPL License',
+    license='MIT',
     description='Django reusable app, what allows to send web push.',
     long_description=README,
-    # url='http://gurutest.ru/',
+    long_description_content_type="text/x-rst",
     author='Yuriy Zemskov',
     author_email='zemskyura@gmail.com',
+    url='https://github.com/kilgoretrout1985/django_infopush',
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
+        'Framework :: Django :: 1.11',
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
@@ -35,11 +36,11 @@ setup(
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
     install_requires=[
-        'Django>=1.11.9,<2.0',
+        'Django>=1.11,<2.0',
         'django-commonstuff>=0.8.6',
         'pytz>=2018.3',
         'Pillow>=4.3.0',  # for dimensions on image upload
-        'pywebpush==1.7.0',  # payload encryption
+        'pywebpush>=1.7.0',  # payload encryption
     ]
 )
 
