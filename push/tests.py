@@ -7,7 +7,9 @@ from django.test import TestCase
 from django.urls import reverse
 from django.conf import settings
 from django.utils import translation, timezone
+from django.utils.six import StringIO
 from django.contrib.sites.models import Site
+from django.core.management import call_command
 
 from .settings import FCM_URL
 from .models import DigestSubscription, Task
@@ -39,6 +41,7 @@ def _new_task_obj_for_test(is_active=True, run_at=None, started_at=None, done_at
     t.save()
     t.started_at = started_at
     t.done_at = done_at
+    # fake task as done
     if is_active and started_at is not None and done_at is not None:
         for tz_layout in t.timezonelayout_set.all():
             tz_layout.started_at = started_at
@@ -106,4 +109,17 @@ class PushTests(TestCase):
         # show notification increases clicks counter
         obj.refresh_from_db()
         self.assertEqual(obj.clicks, 1)
+    
+    @skipUnless(settings.SITE_ID, "Can't generate push-task obj without sites framework.")
+    def test_pushsend_management_command(self):
+        subscr = _new_subscription_obj_for_test(True)
+        task = _new_task_obj_for_test(True, timezone.now()-timedelta(days=3))
+        out = StringIO()
+        call_command('pushsend', stdout=out)
+        subscr.refresh_from_db()
+        # fake endpoint will have to give this subscription some error points
+        self.assertTrue(subscr.errors > 0)
+        task.refresh_from_db()
+        self.assertTrue(task.done_at is not None)
+        self.assertTrue(task.started_at is not None)
     
