@@ -33,6 +33,7 @@ Quick start
 
     INSTALLED_APPS = [
         # ...
+        'commonstuff',
         'push',
     ]
 
@@ -46,7 +47,7 @@ Quick start
 
 6. Include URLconf in your project urls.py like this::
 
-    from django.conf.urls import include
+    from django.conf.urls import url, include
     from django.conf import settings
     from django.views.generic import TemplateView
     from django.views.decorators.cache import cache_page
