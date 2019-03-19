@@ -41,7 +41,9 @@ Quick start
    <https://docs.djangoproject.com/en/1.11/ref/contrib/sites/#enabling-the-sites-framework>`_.
 
 4. Configure django_infopush in your project settings.py file. At least your
-   DJANGO_INFOPUSH_FCM_SENDER_ID and DJANGO_INFOPUSH_FCM_SERVER_KEY *(see docs/SETTINGS.rst)*.
+   DJANGO_INFOPUSH_FCM_SENDER_ID and DJANGO_INFOPUSH_FCM_SERVER_KEY
+   (see `docs/SETTINGS.rst
+   <https://github.com/kilgoretrout1985/django_infopush/blob/master/docs/SETTINGS.rst>`_).
 
 5. Run `python manage.py migrate` to create push models.
 
