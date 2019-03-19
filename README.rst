@@ -12,16 +12,15 @@ subscriptions and send web push notifications to browsers.
 * django admin interface where you create new push tasks (title, text, icon, url, image, time to send) and view stats for the old ones,
 * django management command to perform your tasks (send notifications to subscribers).
 
-.. image:: https://raw.githubusercontent.com/kilgoretrout1985/django_infopush/master/docs/img/push_admin_list.png
+.. image:: https://raw.githubusercontent.com/kilgoretrout1985/django_infopush/master/docs/img/push_admin_list_thumb.png
+   :target: https://raw.githubusercontent.com/kilgoretrout1985/django_infopush/master/docs/img/push_admin_list.png
 
 This app covers 99% webpush needs for content web-sites than you just want
 to send an announcement of a new blog post for example. Just make a new push
 task in the admin and job is done.
 
-.. image:: https://raw.githubusercontent.com/kilgoretrout1985/django_infopush/master/docs/img/push_admin_add.png
-
-For the same reason this app will not suite
-those who need the ability to send individual pushes to each subscriber.
+.. image:: https://raw.githubusercontent.com/kilgoretrout1985/django_infopush/master/docs/img/push_admin_add_thumb.png
+   :target: https://raw.githubusercontent.com/kilgoretrout1985/django_infopush/master/docs/img/push_admin_add.png
 
 **Known limitations are:**
 
