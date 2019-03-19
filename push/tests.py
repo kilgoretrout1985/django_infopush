@@ -23,7 +23,7 @@ def __fake_letters(length=10):
     letters_len = len(letters)
     s = []
     for i in range(length):
-        s.append( letters[ random.randint(0, letters_len-1) ] )
+        s.append(letters[ random.randint(0, letters_len-1) ])
     return ''.join(s)
 
 
