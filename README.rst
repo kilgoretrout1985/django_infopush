@@ -9,12 +9,18 @@ subscriptions and send web push notifications to browsers.
 
 * frontend & backend code which gathers push subscriptions and saves them to DB,
 * service worker to show notifications, manage clicks and basic notification statistics,
-* django admin interface where you create new push tasks (title, text, icon, url, image, time to send),
+* django admin interface where you create new push tasks (title, text, icon, url, image, time to send) and view stats for the old ones,
 * django management command to perform your tasks (send notifications to subscribers).
+
+.. image:: https://raw.githubusercontent.com/kilgoretrout1985/django_infopush/master/docs/img/push_admin_list.png
 
 This app covers 99% webpush needs for content web-sites than you just want
 to send an announcement of a new blog post for example. Just make a new push
-task in the admin and job is done. For the same reason this app will not suite
+task in the admin and job is done.
+
+.. image:: https://raw.githubusercontent.com/kilgoretrout1985/django_infopush/master/docs/img/push_admin_add.png
+
+For the same reason this app will not suite
 those who need the ability to send individual pushes to each subscriber.
 
 **Known limitations are:**
