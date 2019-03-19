@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals, absolute_import, division, print_function
+
 import re
-import urllib.request, urllib.parse, urllib.error
+import django.utils.six.moves.urllib.request, \
+       django.utils.six.moves.urllib.parse, \
+       django.utils.six.moves.urllib.error
 from datetime import timedelta
 
 from PIL import Image

@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals, absolute_import, division, print_function
+
 from pywebpush import WebPusher
 import urllib3
 from requests import exceptions as requests_ex

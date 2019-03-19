@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals, absolute_import, division, print_function
+
 import string
 import random
 from unittest import skipUnless
@@ -16,7 +19,12 @@ from .models import DigestSubscription, Task
 
 
 def __fake_letters(length=10):
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
+    letters = string.ascii_letters + string.digits
+    letters_len = len(letters)
+    s = []
+    for i in range(length):
+        s.append( letters[ random.randint(0, letters_len-1) ] )
+    return ''.join(s)
 
 
 def _new_subscription_obj_for_test(is_active=True):

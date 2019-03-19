@@ -1,6 +1,7 @@
 1.6.6:
 
     - Django test for pushsend management command.
+    - Python 2.7 backward compatibility.
 
 1.6.5:
 
