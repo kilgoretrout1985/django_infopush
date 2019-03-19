@@ -1,3 +1,7 @@
+1.6.7:
+
+    - Edited raw SQL query in push task stats so it won't fail on Postgresql.
+
 1.6.6:
 
     - Django test for pushsend management command.

@@ -175,7 +175,7 @@ def _notification_plus_one(what, id):
     Вынесена, чтобы можно было вызвать напрямую, не передавая request.
     """
     cursor = connection.cursor()
-    cursor.execute("UPDATE `%s` SET `%s`=`%s`+1 WHERE id=%d" \
+    cursor.execute("UPDATE %s SET %s=%s+1 WHERE id=%d" \
                     % (Task._meta.db_table, what, what, int(id)))
 
 
