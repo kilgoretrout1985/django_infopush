@@ -5,5 +5,8 @@
 __pycache__
 dist
 django_infopush.egg-info/
-django_infopush.komodoproject
 0_copy.sh
+*.komodoproject
+*.code-workspace
+.komodotools
+.vscode
