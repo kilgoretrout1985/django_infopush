@@ -20,7 +20,7 @@ from django.conf import settings
 from commonstuff.models import PidLock
 
 from push.models import DigestSubscription, TimezoneLayout, Task
-from push.settings import FCM_SERVER_KEY
+from push.settings import FCM_SERVER_KEY, PUSHSEND_WORKERS
 
 
 # setup custom logging if we have a folder for logs
@@ -80,8 +80,6 @@ class Command(BaseCommand):
     # FCM утверждает, что максимальное время у них 4 недели.
     # для VAPID 86400 секунд - это макс по стандарту
     TTL = 86400 - 1  # Пока так (больше и не нужно по факту)
-    # Сколько процессов использовать для мультирассылки (=1 отключает multiprocessing)
-    WORKERS_TO_USE = 5
 
     start_time = None
     pid_lock = None
@@ -144,7 +142,7 @@ class Command(BaseCommand):
                     continue  # next pack if no active subscribers in this one
                 
                 # разбиваем на кол-во частей или по кол-ву подписок, если их меньше чем ядер
-                max_workers = min(self.WORKERS_TO_USE, len(active_subscriptions))
+                max_workers = min(PUSHSEND_WORKERS, len(active_subscriptions))
                 per_worker = [ active_subscriptions[i::max_workers] for i in range(max_workers) ]
                 active_subscriptions = None  # освобождаем память
                 

@@ -22,6 +22,13 @@ Get it by using `this docs
 Optional settings
 =================
 
+**DJANGO_INFOPUSH_PUSHSEND_WORKERS**
+
+How many processes to use in pushsend management command for parallel
+push (int, default `3`).
+
+Set it to `1` to disable multiprocessing in pushsend command.
+
 **DJANGO_INFOPUSH_DEFAULT_ICON_URL**
 
 Relative path (no domain) to notification icon, which is used by default

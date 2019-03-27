@@ -7,6 +7,10 @@ from django.conf import settings
 FCM_SERVER_KEY = getattr(settings, 'DJANGO_INFOPUSH_FCM_SERVER_KEY', '')
 FCM_SENDER_ID = getattr(settings, 'DJANGO_INFOPUSH_FCM_SENDER_ID', '')
 
+# how many processes to use in a pushsend management command for parallel push
+# 1 disables multiprocessing
+PUSHSEND_WORKERS = int(getattr(settings, 'DJANGO_INFOPUSH_PUSHSEND_WORKERS', 3))
+
 # default push icon
 DEFAULT_ICON_URL = getattr(settings, 'DJANGO_INFOPUSH_DEFAULT_ICON_URL', "/static/push/img/icon.png")
 MIN_ICON_W = int(getattr(settings, 'DJANGO_INFOPUSH_MIN_ICON_W', 192))
