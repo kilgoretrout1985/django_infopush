@@ -1,3 +1,7 @@
+1.6.9:
+
+    - Fixed wrong urllib import from six.moves.
+
 1.6.8:
 
     - New setting: how many processes to use in a pushsend management command for parallel push.

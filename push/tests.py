@@ -12,6 +12,7 @@ from django.conf import settings
 from django.utils import translation, timezone
 from django.utils.six import StringIO
 from django.contrib.sites.models import Site
+#from django.contrib.auth import get_user_model
 from django.core.management import call_command
 
 from .settings import FCM_URL
@@ -131,3 +132,23 @@ class PushTests(TestCase):
         self.assertTrue(task.done_at is not None)
         self.assertTrue(task.started_at is not None)
     
+    # @skipUnless(settings.SITE_ID, "Can't generate push-task obj without sites framework.")
+    # def test_task_admin_form(self):
+    #     # enter /admin (superuser so we don't have to bother with permissions)
+    #     user = get_user_model().objects.create_superuser(
+    #         'username', 'admin@localhost', 'password123'
+    #     )
+    #     self.client.force_login(user)
+    #     response = self.client.post(
+    #         reverse('admin:push_task_add'), 
+    #         {
+    #             'title': 'push title',
+    #             'message': 'push message',
+    #             'url': '/',
+    #             'run_at': timezone.now(),
+    #         }
+    #     )
+    #     self.assertEqual(response.status_code, 200)
+    #     # total 1 task should be in test DB now
+    #     self.assertEqual(Task.objects.count(), 1)
+    #     self.client.logout()
