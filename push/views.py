@@ -38,7 +38,7 @@ def info_disable(request):
 
 @cache_page(86400)
 def manifest_json(request):
-    # нам этот файл нужен, чтобы настроить gcm_sender_id
+    # we need this to set up gcm_sender_id
     # https://developers.google.com/web/updates/2014/11/Support-for-installable-web-apps-with-webapp-manifest-in-chrome-38-for-Android
     try:
         start_url = "%s" % reverse('homepage')
@@ -56,7 +56,7 @@ def manifest_json(request):
     }
     
     for icon in APP_ICON_URLS:
-        # кеширование на сутки, так что тут все ок
+        # we cache this for 24 hours, so using Pillow is acceptable
         img_file = finders.find(icon)
         with Image.open(img_file) as img:
             manifest['icons'].append({
@@ -85,16 +85,15 @@ def _save(request):
         url_validate = URLValidator(schemes=['https',])
         url_validate(endpoint)
     except ValidationError:
-        # chrome 44 и, кажется, 45 иногда передают только id без урла, костылим
+        # chrome 44 and 45 sometimes give only unique part not full endpoint
+        # url, workaround
         if endpoint and ua and 'Chrome' in ua:
             endpoint = "%s/%s" % (FCM_URL, endpoint)
             logger.debug('Fixed endpoint to: %s' % endpoint)
         else:
-            # endpoint должен быть урлом или нах вообще всё это
+            # endpoint must be an url
             raise Http404('Wrong endpoint')
     
-    # если юзер самостоятельно через браузер отпишется и подпишется потом,
-    # у него изменится идентификатор подписки
     key = request.POST.get('key', '')
     auth_secret = request.POST.get('auth_secret', '')
     
@@ -102,13 +101,12 @@ def _save(request):
     if timezone not in pytz.all_timezones:
         timezone = settings.TIME_ZONE
     
-    # поиск
     try:
         subscr = DigestSubscription.objects.get(endpoint=endpoint)
     except DigestSubscription.DoesNotExist:
         subscr = DigestSubscription()
         subscr.endpoint = endpoint
-    # актуализация инфы
+    # actualize info anyway
     subscr.key = key
     subscr.auth_secret = auth_secret
     subscr.timezone = timezone
@@ -171,10 +169,11 @@ def deactivate(request):
 
 def _notification_plus_one(what, id):
     """
-    Облегченная фактическая функция-учетчик статы (на живом SQL для скорости).
-    Вынесена, чтобы можно было вызвать напрямую, не передавая request.
+    Statistics function (using raw SQL for speed).
     """
     cursor = connection.cursor()
+    # what variable content is controlled in django routing
+    # no security threats here
     cursor.execute("UPDATE %s SET %s=%s+1 WHERE id=%d" \
                     % (Task._meta.db_table, what, what, int(id)))
 
@@ -182,7 +181,7 @@ def _notification_plus_one(what, id):
 @never_cache
 def notification_plus_one(request, what, id):
     """
-    Вьюха учета просмотров|закрытий push-задания для статистики.
+    View to count views/closings statistics for push task.
     """
     _notification_plus_one(what, id)
     return HttpResponse(content='ok')
@@ -191,17 +190,10 @@ def notification_plus_one(request, what, id):
 @never_cache
 def last_notification(request):
     """
-    Возвращает данные о последнем актуальном задании
-    (далее - актуальном для дефолтового часового пояса)
-    для старых legacy-подписок, где нельзя шифровать данные.
+    Payload of the last actual and active push task for default timezone
+    for old legacy push subscriptions what do not support payload encryption.
     """
     try:
-        # Выбираем последнее выполненное задание для дефолтового часового пояса.
-        # Это старый обработчик для легаси подписок, которым мы не можем шифровать
-        # данные, тк не знаем auth_secret, а раз не обновили auth_secret, то и
-        # правильный часовой пояс у них не знаем (~97.3% случаев). Еще ~2.7%
-        # случаев это новые подписки на некро-браузеры, которые имеют свой часовой
-        # пояс, но не поддерживают шифрование - пох, такие будут отмирать и % падать.
         tz = TimezoneLayout.public_objects.filter(timezone=settings.TIME_ZONE)[0]
     except IndexError:
         raise Http404
