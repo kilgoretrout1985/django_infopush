@@ -5,6 +5,7 @@ Mandatory Settings
 ==================
 
 **DJANGO_INFOPUSH_VAPID_PUBLIC_KEY**
+
 **DJANGO_INFOPUSH_VAPID_PRIVATE_KEY**
 
 Your public and private keys for VAPID authorization. You can simply generate
