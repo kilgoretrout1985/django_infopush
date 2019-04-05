@@ -131,11 +131,10 @@ class BaseSubscription(models.Model):
             if response['code'] < 300:
                 return self
             # http://autopush.readthedocs.io/en/latest/http.html#response
-            error_points = 0 # default for 401, 413, 500, 503
+            # https://developers.google.com/web/fundamentals/push-notifications/web-push-protocol#response_from_push_service
+            error_points = 0 # default for 401, 413, 429, 500, 503...
             if response['code'] == 301:
                 error_points = 3
-            elif response['code'] == 400 and response['errno'] < 111:
-                error_points = 1
             elif response['code'] in (404, 410):
                 error_points = 15
             if error_points:

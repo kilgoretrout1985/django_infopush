@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import, division, print_function
 
-from pywebpush import WebPusher, webpush
+from pywebpush import WebPusher, webpush, WebPushException
 import urllib3
 from requests import exceptions as requests_ex
 
@@ -51,11 +51,11 @@ def send_push_worker(data):
         ttl,
     ) = data
     
+    vapid_claims = { "sub": "mailto:"+VAPID_ADMIN_EMAIL, }
     responses = []
     exceptions = []  # can't use logger in a worker
     for subscr in subscr_list:
         try:
-            response = None
             if subscr.is_gcm(): 
                 response = WebPusher( subscr.endpoint_and_keys() ).send(
                     data=payload if subscr.supports_payload() else None,
@@ -63,24 +63,26 @@ def send_push_worker(data):
                     timeout=2,
                     gcm_key=FCM_SERVER_KEY
                 )
+                responses.append( (subscr, response) )
             else:
-                response = webpush(
-                    subscription_info=subscr.endpoint_and_keys(),
-                    data=payload if subscr.supports_payload() else None,
-                    ttl=ttl,
-                    timeout=2,
-                    vapid_private_key=VAPID_PRIVATE_KEY,
-                    vapid_claims={
-                        # minus 15 minutes for clock differences between our server and 
-                        # push service server. This is still better than default 
-                        # minus 12 hours in pywebpush lib
-                        "exp": int(time.time()) + ttl - 15*60,
-                        "sub": "mailto:"+VAPID_ADMIN_EMAIL,
-                    }
-                )
-            # https://developers.google.com/web/fundamentals/push-notifications/web-push-protocol#response_from_push_service
-            # http://autopush.readthedocs.io/en/latest/http.html#error-codes            
-            responses.append( (subscr, response) )
+                # minus 15 minutes for clock differences between our server and 
+                # push service server. This is still better than default 
+                # minus 12 hours in pywebpush lib
+                vapid_claims["exp"] = int(time.time()) + ttl - 15*60,
+                try:
+                    response = webpush(
+                        subscription_info=subscr.endpoint_and_keys(),
+                        data=payload if subscr.supports_payload() else None,
+                        ttl=ttl,
+                        timeout=2,
+                        vapid_private_key=VAPID_PRIVATE_KEY,
+                        vapid_claims=vapid_claims
+                    )
+                    responses.append( (subscr, response) )
+                except WebPushException as e:
+                    # WebPushException got response object but we need to count
+                    # error points on subscriptions
+                    responses.append( (subscr, e.response) )
         except Exception as e:
             exceptions.append( (subscr, e, time.time(),) )
     
