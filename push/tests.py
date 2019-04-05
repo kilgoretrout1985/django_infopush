@@ -6,7 +6,7 @@ import random
 from unittest import skipUnless
 from datetime import timedelta
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.conf import settings
 from django.utils import translation, timezone
@@ -15,7 +15,7 @@ from django.contrib.sites.models import Site
 #from django.contrib.auth import get_user_model
 from django.core.management import call_command
 
-from .settings import GCM_URL
+from .settings import GCM_URL, FCM_SENDER_ID
 from .models import DigestSubscription, Task
 
 
@@ -30,7 +30,7 @@ def __fake_letters(length=10):
 
 def _new_subscription_obj_for_test(is_active=True):
     s = DigestSubscription()
-    s.endpoint = GCM_URL + '/' + __fake_letters(30)
+    s.endpoint = 'https://updates.push.services.mozilla.com/wpush/v1/' + __fake_letters(30)
     s.timezone = settings.TIME_ZONE
     s.is_active = is_active
     if is_active:
@@ -73,9 +73,10 @@ class PushTests(TestCase):
         self.assertContains(response, 'Firefox')
         self.assertContains(response, 'Chrome for Android')
     
+    @skipUnless(FCM_SENDER_ID, "This test is needed only for FCM project setup, not for default VAPID.")
     def test_manifest_json_has_fcm_sender_id(self):
         response = self.client.get(reverse('push_manifest_json'))
-        self.assertTrue( response.json()['gcm_sender_id'] )
+        self.assertTrue( response.json()['gcm_sender_id'] == FCM_SENDER_ID )
     
     def test_view_saves_subscription_on_server(self):
         response = self.client.post(reverse('push_save'), {
@@ -127,7 +128,7 @@ class PushTests(TestCase):
         call_command('pushsend', stdout=out)
         subscr.refresh_from_db()
         # fake endpoint will have to give this subscription some error points
-        self.assertTrue(subscr.errors > 0)
+        self.assertTrue(subscr.errors > 0 or not subscr.is_active)
         task.refresh_from_db()
         self.assertTrue(task.done_at is not None)
         self.assertTrue(task.started_at is not None)

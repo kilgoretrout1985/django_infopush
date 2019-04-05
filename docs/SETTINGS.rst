@@ -1,8 +1,8 @@
 You have to define these variables in settings.py file of your Django project.
 
-========================
-(Semi)Mandatory Settings
-========================
+==================
+Mandatory Settings
+==================
 
 **DJANGO_INFOPUSH_VAPID_PUBLIC_KEY**
 **DJANGO_INFOPUSH_VAPID_PRIVATE_KEY**
@@ -16,15 +16,15 @@ project.
 
 (both are `str`, defaults to empty string).
 
-=================
-Optional settings
-=================
-
 **DJANGO_INFOPUSH_VAPID_ADMIN_EMAIL**
-It is advised by VAPID spec to set your site/server admin/support address,
+VAPID spec advises to set your site/server admin or support address,
 so that push-server administration can reach you if something goes wrong.
 
 (`str`, defaults to empty string).
+
+=================
+Optional settings
+=================
 
 **DJANGO_INFOPUSH_PUSHSEND_WORKERS**
 

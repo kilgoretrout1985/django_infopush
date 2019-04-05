@@ -52,8 +52,9 @@ def manifest_json(request):
         "icons": [],
         "start_url": "%s?from=manifest_json" % start_url,
         "display": "standalone",
-        "gcm_sender_id": FCM_SENDER_ID,
     }
+    if FCM_SENDER_ID:
+        manifest['gcm_sender_id'] = FCM_SENDER_ID
     
     for icon in APP_ICON_URLS:
         # we cache this for 24 hours, so using Pillow is acceptable

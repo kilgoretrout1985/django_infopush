@@ -47,8 +47,8 @@ Quick start
    DJANGO_INFOPUSH_VAPID_PUBLIC_KEY and DJANGO_INFOPUSH_VAPID_PRIVATE_KEY
    (you can simply generate them `here <https://web-push-codelab.glitch.me/>`_).
 
-   It is also advised to set DJANGO_INFOPUSH_VAPID_ADMIN_EMAIL with your 
-   site/server admin/support address, so that push-server administration can
+   You also have to set DJANGO_INFOPUSH_VAPID_ADMIN_EMAIL with your
+   site admin or support address, so that push-server administration can
    reach you if something goes wrong.
 
    E.g.::
