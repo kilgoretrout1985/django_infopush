@@ -1,3 +1,8 @@
+1.7:
+
+    - VAPID support (it is default auth method from now on). 
+    - FCM/GCM support left only for bc (sending pushes to subscriptions that already exist).
+
 1.6.9:
 
     - Fixed wrong urllib import from six.moves.

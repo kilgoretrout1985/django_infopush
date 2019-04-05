@@ -1,26 +1,30 @@
 You have to define these variables in settings.py file of your Django project.
 
-==================
-Mandatory Settings
-==================
+========================
+(Semi)Mandatory Settings
+========================
 
-**DJANGO_INFOPUSH_FCM_SERVER_KEY**
+**DJANGO_INFOPUSH_VAPID_PUBLIC_KEY**
+**DJANGO_INFOPUSH_VAPID_PRIVATE_KEY**
 
-Key of your Google FCM project (str).
+Your public and private keys for VAPID authorization. You can simply generate
+them `here <https://web-push-codelab.glitch.me/>`_ in a second.
 
-Get it by using `this docs
-<https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web#make_a_project_on_the_firebase_developer_console>`_.
+Without these keys you can only push-subscribe Firefox, not Chrome. Chrome
+requires keys for VAPID subscriptions, so you better set them up in your
+project.
 
-**DJANGO_INFOPUSH_FCM_SENDER_ID**
-
-ID of your Google FCM project (str).
-
-Get it by using `this docs
-<https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web#make_a_project_on_the_firebase_developer_console>`_.
+(both are `str`, defaults to empty string).
 
 =================
 Optional settings
 =================
+
+**DJANGO_INFOPUSH_VAPID_ADMIN_EMAIL**
+It is advised by VAPID spec to set your site/server admin/support address,
+so that push-server administration can reach you if something goes wrong.
+
+(`str`, defaults to empty string).
 
 **DJANGO_INFOPUSH_PUSHSEND_WORKERS**
 
@@ -113,3 +117,21 @@ The number of error points, after which we disable push-subscription (int, by de
 
 Allows you to turn off CSRF checking on push views. Sometimes it can be helpful
 (bool, default is True - CSRF works).
+
+**DJANGO_INFOPUSH_FCM_SERVER_KEY**
+
+Key of your Google FCM project (str).
+Left for backward compatibily - sending pushes to old FCM/GCM subscriptions
+that already exist.
+
+Get it by using `this docs
+<https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web#make_a_project_on_the_firebase_developer_console>`_.
+
+**DJANGO_INFOPUSH_FCM_SENDER_ID**
+
+ID of your Google FCM project (str).
+Left for backward compatibily - sending pushes to old FCM/GCM subscriptions
+that already exist.
+
+Get it by using `this docs
+<https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web#make_a_project_on_the_firebase_developer_console>`_.

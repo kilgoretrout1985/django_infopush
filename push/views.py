@@ -19,7 +19,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.staticfiles import finders
 from django.contrib.sites.shortcuts import get_current_site
 
-from .settings import FCM_SENDER_ID, FCM_URL, APP_ICON_URLS, USE_CSRF, \
+from .settings import FCM_SENDER_ID, GCM_URL, APP_ICON_URLS, USE_CSRF, \
                       APP_BACKGROUND_COLOR, APP_THEME_COLOR
 from .models import DigestSubscription, Task, TimezoneLayout
 
@@ -88,7 +88,7 @@ def _save(request):
         # chrome 44 and 45 sometimes give only unique part not full endpoint
         # url, workaround
         if endpoint and ua and 'Chrome' in ua:
-            endpoint = "%s/%s" % (FCM_URL, endpoint)
+            endpoint = "%s/%s" % (GCM_URL, endpoint)
             logger.debug('Fixed endpoint to: %s' % endpoint)
         else:
             # endpoint must be an url

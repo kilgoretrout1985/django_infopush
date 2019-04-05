@@ -70,6 +70,22 @@
         });
     }
     
+    // from https://github.com/GoogleChromeLabs/web-push-codelab/issues/46
+    function urlBase64ToUint8Array(base64String) {
+        var padding = '='.repeat((4 - base64String.length % 4) % 4);
+        var base64 = (base64String + padding)
+            .replace(/\-/g, '+')
+            .replace(/_/g, '/');
+    
+        var rawData = window.atob(base64);
+        var outputArray = new Uint8Array(rawData.length);
+    
+        for (var i = 0; i < rawData.length; ++i) {
+            outputArray[i] = rawData.charCodeAt(i);
+        }
+        return outputArray;
+    }
+    
     function push_subscribe() {
         // Disable the button so it can't be changed while  
         // we process the permission request  
@@ -79,7 +95,10 @@
         navigator.serviceWorker.ready
         .then(function(serviceWorkerRegistration) {
             return serviceWorkerRegistration.pushManager.subscribe({
-                userVisibleOnly: true
+                userVisibleOnly: true,
+                applicationServerKey: urlBase64ToUint8Array(
+                    django_infopush_js_dynamic_vars.vapid_public_key
+                )
             });
         })
         .then(function(subscription) {

@@ -26,14 +26,13 @@ task in the admin and job is done.
 
 * Tested only on Django 1.11 LTS.
 * You better have access to CRON on your server, because push tasks are send using `python manage.py pushsend` management command. And running it manually every time sounds like a bad idea. Although for testing purposes manual calls will do well.
-* django_infopush currently uses Google FCM, not VAPID. If you do not know what it means, let's say VAPID is the future ot webpush, and FCM is the past, which nevertheless works fine. VAPID support will be added someday.
 
 Quick start
 -----------
 
 1. `pip install django_infopush`
 
-2. Add "push" to your INSTALLED_APPS setting like this::
+2. Add "commonstuff" and "push" to your INSTALLED_APPS setting like this::
 
     INSTALLED_APPS = [
         # ...
@@ -45,9 +44,18 @@ Quick start
    <https://docs.djangoproject.com/en/1.11/ref/contrib/sites/#enabling-the-sites-framework>`_.
 
 4. Configure django_infopush in your project settings.py file. At least your
-   DJANGO_INFOPUSH_FCM_SENDER_ID and DJANGO_INFOPUSH_FCM_SERVER_KEY
-   (see `docs/SETTINGS.rst
-   <https://github.com/kilgoretrout1985/django_infopush/blob/master/docs/SETTINGS.rst>`_).
+   DJANGO_INFOPUSH_VAPID_PUBLIC_KEY and DJANGO_INFOPUSH_VAPID_PRIVATE_KEY
+   (you can simply generate them `here <https://web-push-codelab.glitch.me/>`_).
+
+   It is also advised to set DJANGO_INFOPUSH_VAPID_ADMIN_EMAIL with your 
+   site/server admin/support address, so that push-server administration can
+   reach you if something goes wrong.
+
+   E.g.::
+
+    DJANGO_INFOPUSH_VAPID_PUBLIC_KEY = 'AHf42JhrMtFOXAG2OYTmEoBvKNcEsxmYF5pqvYd4InFEEU0x41HzymPQRtcvJZp9iNpDQK4GuTGMWAgn0E8G8IZ'
+    DJANGO_INFOPUSH_VAPID_PRIVATE_KEY = 'CcmbGJ9wce7596DoObRzyPHNktPRo5CSCdericz7Pf7'
+    DJANGO_INFOPUSH_VAPID_ADMIN_EMAIL = 'admin@mysite.com'
 
 5. Run `python manage.py migrate` to create push models.
 

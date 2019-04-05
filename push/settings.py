@@ -3,6 +3,9 @@ from __future__ import unicode_literals, absolute_import, division, print_functi
 
 from django.conf import settings
 
+VAPID_PUBLIC_KEY = getattr(settings, 'DJANGO_INFOPUSH_VAPID_PUBLIC_KEY', '')
+VAPID_PRIVATE_KEY = getattr(settings, 'DJANGO_INFOPUSH_VAPID_PRIVATE_KEY', '')
+VAPID_ADMIN_EMAIL = getattr(settings, 'DJANGO_INFOPUSH_VAPID_ADMIN_EMAIL', '')
 
 FCM_SERVER_KEY = getattr(settings, 'DJANGO_INFOPUSH_FCM_SERVER_KEY', '')
 FCM_SENDER_ID = getattr(settings, 'DJANGO_INFOPUSH_FCM_SENDER_ID', '')
@@ -39,7 +42,8 @@ APP_BACKGROUND_COLOR = getattr(settings, 'DJANGO_INFOPUSH_APP_BACKGROUND_COLOR',
 ERROR_THRESHOLD = int(getattr(settings, 'DJANGO_INFOPUSH_ERROR_THRESHOLD', 30))
 
 # do not change, it is here for easy import of this constant
-FCM_URL = 'https://android.googleapis.com/gcm/send'
+GCM_URL = 'https://android.googleapis.com/gcm/send'
+FCM_URL = 'https://fcm.googleapis.com/fcm/send'
 
 # this setting allows to disable CSRF for django_infopush views only, if needed
 USE_CSRF = bool(getattr(settings, 'DJANGO_INFOPUSH_USE_CSRF', True))

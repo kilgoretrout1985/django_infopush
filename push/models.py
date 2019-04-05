@@ -20,7 +20,7 @@ from django.utils.encoding import python_2_unicode_compatible
 
 from commonstuff.models_base import ModelWith2Images
 
-from .settings import DEFAULT_ICON_URL, ERROR_THRESHOLD, FCM_URL
+from .settings import DEFAULT_ICON_URL, ERROR_THRESHOLD, GCM_URL
 
 
 # http://stackoverflow.com/questions/27072222/django-1-7-1-makemigrations-fails-when-using-lambda-as-default-for-attribute
@@ -64,11 +64,8 @@ class BaseSubscription(models.Model):
     endpoint_truncated.short_description = _('endpoint')
 
     def is_gcm(self):
-        """Is it a Google subscription (they have own sending algo for now on)"""
-        return self.is_fcm()
-    
-    def is_fcm(self):
-        return self.endpoint.startswith(FCM_URL)
+        """Is it an old Google subscription (they have own sending algo)"""
+        return self.endpoint.startswith(GCM_URL)
     
     def supports_payload(self):
         return bool(self.key and self.auth_secret)
@@ -123,7 +120,7 @@ class BaseSubscription(models.Model):
         if response and not isinstance(response, dict):
             response = json.loads(response)
         
-        if self.is_fcm():
+        if self.is_gcm():
             return self.__fcm_push_service_response_to_errors(response)
         else:
             return self.__normal_push_service_response_to_errors(response)
@@ -165,7 +162,7 @@ class BaseSubscription(models.Model):
                     url_validate = URLValidator(schemes=['https',])
                     url_validate(new_endpoint)
                 except ValidationError:
-                    new_endpoint = "%s/%s" % (FCM_URL, new_endpoint)
+                    new_endpoint = "%s/%s" % (GCM_URL, new_endpoint)
                 self.endpoint = new_endpoint
                 try:
                     self.save()

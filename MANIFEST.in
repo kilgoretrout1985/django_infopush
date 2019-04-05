@@ -5,6 +5,7 @@ include README.rst
 recursive-include push/management *
 recursive-include push/static *
 recursive-include push/templates *
+recursive-include push/templatetags *
 recursive-include push/migrations *
 recursive-include push/locale *
 recursive-include docs *

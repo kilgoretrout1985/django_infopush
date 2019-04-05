@@ -1,4 +1,4 @@
-{% load staticfiles i18n %}
+{% load staticfiles i18n push_settings %}
 
 <link rel="manifest" href="{% url 'push_manifest_json' %}" />
 
@@ -6,6 +6,7 @@
 <!-- {% csrf_token %} -->
 <script type="text/javascript">
     var django_infopush_js_dynamic_vars = {
+        vapid_public_key: "{% push_settings 'VAPID_PUBLIC_KEY' %}",
         save_url: "{% url 'push_save' %}",
         deactivate_url: "{% url 'push_deactivate' %}",
         on_button_label: "{% trans 'Turn push notifications on' %}",
@@ -13,4 +14,4 @@
     };
 </script>
 <script defer type="text/javascript" src="{% static 'push/js/jstz.min.js' %}?1" charset="utf-8"></script>
-<script defer type="text/javascript" src="{% static 'push/js/push.js' %}?54" charset="utf-8"></script>
+<script defer type="text/javascript" src="{% static 'push/js/push.js' %}?56" charset="utf-8"></script>

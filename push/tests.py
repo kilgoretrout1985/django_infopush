@@ -15,7 +15,7 @@ from django.contrib.sites.models import Site
 #from django.contrib.auth import get_user_model
 from django.core.management import call_command
 
-from .settings import FCM_URL
+from .settings import GCM_URL
 from .models import DigestSubscription, Task
 
 
@@ -30,7 +30,7 @@ def __fake_letters(length=10):
 
 def _new_subscription_obj_for_test(is_active=True):
     s = DigestSubscription()
-    s.endpoint = FCM_URL + '/' + __fake_letters(30)
+    s.endpoint = GCM_URL + '/' + __fake_letters(30)
     s.timezone = settings.TIME_ZONE
     s.is_active = is_active
     if is_active:
@@ -79,7 +79,7 @@ class PushTests(TestCase):
     
     def test_view_saves_subscription_on_server(self):
         response = self.client.post(reverse('push_save'), {
-            'endpoint': FCM_URL + '/hstwtdjsyTDSDGSU',
+            'endpoint': GCM_URL + '/hstwtdjsyTDSDGSU',
         })
         self.assertEqual(response.status_code, 200)
         self.assertTrue( int(response.json()['response']['id']) > 0 )

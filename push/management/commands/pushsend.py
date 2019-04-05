@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, absolute_import, division, print_function
 
-from pywebpush import WebPusher
+from pywebpush import WebPusher, webpush
 import urllib3
 from requests import exceptions as requests_ex
 
@@ -20,7 +20,8 @@ from django.conf import settings
 from commonstuff.models import PidLock
 
 from push.models import DigestSubscription, TimezoneLayout, Task
-from push.settings import FCM_SERVER_KEY, PUSHSEND_WORKERS
+from push.settings import FCM_SERVER_KEY, PUSHSEND_WORKERS, VAPID_PRIVATE_KEY,\
+                          VAPID_ADMIN_EMAIL
 
 
 # setup custom logging if we have a folder for logs
@@ -28,7 +29,7 @@ logger = logging.getLogger(__name__)
 log_dir = os.path.join(settings.BASE_DIR, 'log')
 if os.access(log_dir, os.F_OK) and os.access(log_dir, os.W_OK):
     logger.propagate = False
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG if settings.DEBUG else logging.INFO)
     logger.addHandler(logging.FileHandler(os.path.join(log_dir, 'pushsend.log')))
     if settings.DEBUG:
         db_logger = logging.getLogger('django.db.backends') # log all SQL's
@@ -51,16 +52,34 @@ def send_push_worker(data):
     ) = data
     
     responses = []
-    exceptions = []  # logger нельзя передать в worker
+    exceptions = []  # can't use logger in a worker
     for subscr in subscr_list:
         try:
-            # http://autopush.readthedocs.io/en/latest/http.html#error-codes
-            response = WebPusher( subscr.endpoint_and_keys() ).send(
-                data=payload if subscr.supports_payload() else None,
-                ttl=ttl,
-                timeout=2,
-                gcm_key=FCM_SERVER_KEY if subscr.is_fcm() else None
-            )
+            response = None
+            if subscr.is_gcm(): 
+                response = WebPusher( subscr.endpoint_and_keys() ).send(
+                    data=payload if subscr.supports_payload() else None,
+                    ttl=ttl,
+                    timeout=2,
+                    gcm_key=FCM_SERVER_KEY
+                )
+            else:
+                response = webpush(
+                    subscription_info=subscr.endpoint_and_keys(),
+                    data=payload if subscr.supports_payload() else None,
+                    ttl=ttl,
+                    timeout=2,
+                    vapid_private_key=VAPID_PRIVATE_KEY,
+                    vapid_claims={
+                        # minus 15 minutes for clock differences between our server and 
+                        # push service server. This is still better than default 
+                        # minus 12 hours in pywebpush lib
+                        "exp": int(time.time()) + ttl - 15*60,
+                        "sub": "mailto:"+VAPID_ADMIN_EMAIL,
+                    }
+                )
+            # https://developers.google.com/web/fundamentals/push-notifications/web-push-protocol#response_from_push_service
+            # http://autopush.readthedocs.io/en/latest/http.html#error-codes            
             responses.append( (subscr, response) )
         except Exception as e:
             exceptions.append( (subscr, e, time.time(),) )
@@ -190,6 +209,9 @@ class Command(BaseCommand):
                 # с изменениями БД в воркерах тоже непонятно как все работает
                 for subscr, response in responses:
                     try:
+                        logger.debug("Response for subscr %d" % subscr.pk)
+                        logger.debug(response)
+                        logger.debug(response.text)
                         subscr.push_service_response_to_errors(response.text)
                     except Exception as e:
                         localtime = time.asctime( time.localtime(time.time()) )
