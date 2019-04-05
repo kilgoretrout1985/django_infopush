@@ -57,6 +57,10 @@ Quick start
     DJANGO_INFOPUSH_VAPID_PRIVATE_KEY = 'CcmbGJ9wce7596DoObRzyPHNktPRo5CSCdericz7Pf7'
     DJANGO_INFOPUSH_VAPID_ADMIN_EMAIL = 'admin@mysite.com'
 
+   See `docs/SETTINGS.rst
+   <https://github.com/kilgoretrout1985/django_infopush/blob/master/docs/SETTINGS.rst>`_
+   for more.
+
 5. Run `python manage.py migrate` to create push models.
 
 6. Include URLconf in your project urls.py like this::
