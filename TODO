@@ -2,3 +2,5 @@
 to it to lower impact on DB.
 
 - Maybe change from CRON + management command to some hipster stuff.
+
+- Tox for testing using different django/python versions.
