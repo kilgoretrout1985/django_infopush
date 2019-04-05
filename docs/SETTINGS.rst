@@ -18,6 +18,7 @@ project.
 (both are `str`, defaults to empty string).
 
 **DJANGO_INFOPUSH_VAPID_ADMIN_EMAIL**
+
 VAPID spec advises to set your site/server admin or support address,
 so that push-server administration can reach you if something goes wrong.
 
