@@ -60,7 +60,10 @@ def send_push_worker(data):
                     data=payload if subscr.supports_payload() else None,
                     ttl=ttl,
                     timeout=2,
-                    gcm_key=FCM_SERVER_KEY
+                    gcm_key=FCM_SERVER_KEY,
+                    # seems to be the only encoding legacy chrome understands
+                    # for payload encryption
+                    content_encoding="aesgcm"
                 )
                 responses.append( (subscr, response) )
             else:

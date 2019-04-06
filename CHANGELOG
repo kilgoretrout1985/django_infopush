@@ -1,3 +1,7 @@
+1.7.2:
+
+    - Fixed payload encryption in legacy non-VAPID Chrome subscription due to pywebpush dependency update.
+
 1.7.1:
 
     - Fixed a bug with vapid_claims dict reference.

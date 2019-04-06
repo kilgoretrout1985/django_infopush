@@ -11,7 +11,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setuptools.setup(
     name='django_infopush',
-    version='1.7.1',
+    version='1.7.2',
     packages=setuptools.find_packages(),  # ['push'],
     include_package_data=True,
     license='MIT',
