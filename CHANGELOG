@@ -1,3 +1,7 @@
+1.7.1:
+
+    - Fixed a bug with vapid_claims dict reference.
+
 1.7:
 
     - VAPID support (it is default auth method from now on). 
