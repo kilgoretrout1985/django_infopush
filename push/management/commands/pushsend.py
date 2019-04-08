@@ -24,24 +24,6 @@ from push.settings import FCM_SERVER_KEY, PUSHSEND_WORKERS, VAPID_PRIVATE_KEY,\
                           VAPID_ADMIN_EMAIL
 
 
-# setup custom logging if we have a folder for logs
-logger = logging.getLogger(__name__)
-log_dir = os.path.join(settings.BASE_DIR, 'log')
-if os.access(log_dir, os.F_OK) and os.access(log_dir, os.W_OK):
-    logger.propagate = False
-    logger.setLevel(logging.DEBUG if settings.DEBUG else logging.INFO)
-    logger.addHandler(logging.FileHandler(os.path.join(log_dir, 'pushsend.log')))
-    if settings.DEBUG:
-        db_logger = logging.getLogger('django.db.backends') # log all SQL's
-        db_logger.propagate = False
-        db_logger.setLevel(logging.DEBUG)
-        db_logger.addHandler(logging.FileHandler(
-            os.path.join(log_dir, 'pushsend_sql_debug.log')
-        ))
-else:
-    logger.addHandler(logging.NullHandler())
-
-
 # функция должна быть вынесена из класса, чтобы запускаться в Pool
 # параметр она получает только один (в нашем случае tuple со всеми данными)
 def send_push_worker(data):
@@ -105,26 +87,45 @@ class Command(BaseCommand):
 
     start_time = None
     pid_lock = None
+    logger = None
+    db_logger = None
     
     def __init__(self, *args, **kwargs):
         # protection against several copies of pushsend running at the same time
         self.pid_lock = PidLock(process=__file__)
         self.pid_lock.save_or_die()
         
-        # все что после save_or_die может не выполниться,
-        # если другой процесс уже выполняет команду
-        
+        # everything (except destructor method) after save_or_die may not run
+        # if another process is already running pushsend management command
         self.start_time = time.time()
-        logger.info("pushsend started at %s.", time.asctime(time.localtime(self.start_time)))
+        
+        # setup custom logging if we have a folder for logs
+        self.logger = logging.getLogger(__name__)
+        log_dir = os.path.join(settings.BASE_DIR, 'log')
+        if os.access(log_dir, os.F_OK) and os.access(log_dir, os.W_OK):
+            self.logger.propagate = False
+            self.logger.setLevel(logging.DEBUG if settings.DEBUG else logging.INFO)
+            self.logger.addHandler(logging.FileHandler(os.path.join(log_dir, 'pushsend.log')))
+            if settings.DEBUG:
+                self.db_logger = logging.getLogger('django.db.backends')  # log all SQL's
+                self.db_logger.propagate = False
+                self.db_logger.setLevel(logging.DEBUG)
+                self.db_logger.addHandler(logging.FileHandler(
+                    os.path.join(log_dir, 'pushsend_sql_debug.log')
+                ))
+        else:
+            self.logger.addHandler(logging.NullHandler())
+        
+        self.logger.info("pushsend started at %s.", time.asctime(time.localtime(self.start_time)))
         super(Command, self).__init__(*args, **kwargs)
     
     def __del__(self):
-        # может быть None, если это дублирующий процесс, который будет
-        # убит в вызове save_or_die из конструктора
+        # May be None, if it is a duplicate process killed in save_or_die 
+        # call in the constructor. If so, log nothing.
         if self.start_time is not None:
             end_time = time.time()
-            logger.info("pushsend ended at %s.", time.asctime(time.localtime(end_time)))
-            logger.info("pushsend worked for %f seconds.", (end_time - self.start_time))
+            self.logger.info("pushsend ended at %s.", time.asctime(time.localtime(end_time)))
+            self.logger.info("pushsend worked for %f seconds.", (end_time - self.start_time))
         
         if self.pid_lock and self.pid_lock.pk:
             self.pid_lock.delete()
@@ -204,7 +205,7 @@ class Command(BaseCommand):
                 
                 # can't use logger in workers, so log their exceptions here
                 for subscr, e, timestamp in exceptions:
-                    logger.error(
+                    self.logger.error(
                         "%s, %s: %s, %s" % (
                             "Exception from push worker", 
                             time.asctime(time.localtime(timestamp)), 
@@ -219,16 +220,16 @@ class Command(BaseCommand):
                 # changing DB from workers is also a problem
                 for subscr, response in responses:
                     try:
-                        logger.debug("Response for subscr %d" % subscr.pk)
-                        logger.debug(response)
-                        logger.debug(response.text)
+                        self.logger.debug("Response for subscr %d" % subscr.pk)
+                        self.logger.debug(response)
+                        self.logger.debug(response.text)
                         
                         subscr.push_service_response_to_errors(
                             response.status_code,
                             response.text
                         )
                     except Exception as e:
-                        logger.exception(
+                        self.logger.exception(
                             "%s, %s: %s" % (
                                 "Exception while subscription error accounting", 
                                 time.asctime(time.localtime(time.time())),
