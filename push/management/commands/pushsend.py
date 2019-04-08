@@ -49,6 +49,9 @@ def send_push_worker(data):
         subscr_list,
         payload,
         ttl,
+        gcm_key,
+        vapid_key,
+        vapid_email,
     ) = data
     
     responses = []
@@ -59,8 +62,8 @@ def send_push_worker(data):
                 response = WebPusher( subscr.endpoint_and_keys() ).send(
                     data=payload if subscr.supports_payload() else None,
                     ttl=ttl,
-                    timeout=2,
-                    gcm_key=FCM_SERVER_KEY,
+                    timeout=3.0,
+                    gcm_key=gcm_key,
                     # seems to be the only encoding legacy chrome understands
                     # for payload encryption
                     content_encoding="aesgcm"
@@ -72,15 +75,9 @@ def send_push_worker(data):
                         subscription_info=subscr.endpoint_and_keys(),
                         data=payload if subscr.supports_payload() else None,
                         ttl=ttl,
-                        timeout=2,
-                        vapid_private_key=VAPID_PRIVATE_KEY,
-                        vapid_claims={
-                            "sub": "mailto:"+VAPID_ADMIN_EMAIL,
-                            # minus 15 minutes for clock differences between our server and 
-                            # push service server. This is still better than default 
-                            # minus 12 hours in pywebpush lib
-                            "exp": int(time.time()) + ttl - 15*60,
-                        }
+                        timeout=3.0,
+                        vapid_private_key=vapid_key,
+                        vapid_claims={"sub": "mailto:"+vapid_email,}
                     )
                     responses.append( (subscr, response) )
                 except WebPushException as e:
@@ -180,6 +177,9 @@ class Command(BaseCommand):
                             # общие для всех вызовов
                             json.dumps( task.get_payload() ),
                             self.TTL,
+                            FCM_SERVER_KEY,
+                            VAPID_PRIVATE_KEY,
+                            VAPID_ADMIN_EMAIL,
                         )
                     )
                 per_worker = None  # освобождаем память
@@ -202,28 +202,40 @@ class Command(BaseCommand):
                     multi_result = None
                 pool_data = None
                 
-                # logger нельзя передавать в воркеры, поэтому залогим
-                # полученные exceptions сейчас
+                # can't use logger in workers, so log their exceptions here
                 for subscr, e, timestamp in exceptions:
-                    localtime = time.asctime(time.localtime(timestamp))
-                    logger.error("%s, %s: %s, %s" % (__name__, localtime, type(e), e))
+                    logger.error(
+                        "%s, %s: %s, %s" % (
+                            "Exception from push worker", 
+                            time.asctime(time.localtime(timestamp)), 
+                            type(e), e
+                        )
+                    )
                     # endpoint is not url
                     if isinstance(e, requests_ex.InvalidURL) \
                     or isinstance(e, requests_ex.URLRequired): 
                         subscr.deactivate().save()
                 
-                # с изменениями БД в воркерах тоже непонятно как все работает
+                # changing DB from workers is also a problem
                 for subscr, response in responses:
                     try:
                         logger.debug("Response for subscr %d" % subscr.pk)
                         logger.debug(response)
                         logger.debug(response.text)
-                        subscr.push_service_response_to_errors(response.text)
+                        
+                        subscr.push_service_response_to_errors(
+                            response.status_code,
+                            response.text
+                        )
                     except Exception as e:
-                        localtime = time.asctime( time.localtime(time.time()) )
-                        logger.exception("%s, %s: %s, %s" % (__name__, localtime, type(e), e))
+                        logger.exception(
+                            "%s, %s: %s" % (
+                                "Exception while subscription error accounting", 
+                                time.asctime(time.localtime(time.time())),
+                                e
+                            )
+                        )
             
-            # запишем результаты наших стараний в БД
             tz_layout.done_at = timezone.now()
             tz_layout.save(update_fields=['done_at'])
             if task.all_timezones_done():

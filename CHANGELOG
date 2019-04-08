@@ -1,3 +1,7 @@
+1.7.3:
+
+    - Small modifications to pushsend management command. Mostly in logging and subscription error accounting.
+
 1.7.2:
 
     - Fixed payload encryption in legacy non-VAPID Chrome subscription due to pywebpush dependency update.

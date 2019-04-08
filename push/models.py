@@ -110,32 +110,27 @@ class BaseSubscription(models.Model):
                     self.errors = 0
         return self
     
-    def push_service_response_to_errors(self, response):
+    def push_service_response_to_errors(self, response_status, response_body):
         """
         Parse response from remote push-server.
         
         Penalize erroneous subscriptions, removes points from successful delivery.
         Receives the response body of the push server (json str or dict).
         """
-        if response and not isinstance(response, dict):
-            response = json.loads(response)
-        
         if self.is_gcm():
-            return self.__fcm_push_service_response_to_errors(response)
+            return self.__fcm_push_service_response_to_errors(response_body)
         else:
-            return self.__normal_push_service_response_to_errors(response)
+            return self.__vapid_push_service_response_to_errors(response_status)
     
-    def __normal_push_service_response_to_errors(self, response):
-        # For non(!)-success responses, an extended error code object will be returned
-        if response:  # we have an error
-            if response['code'] < 300:
-                return self
-            # http://autopush.readthedocs.io/en/latest/http.html#response
-            # https://developers.google.com/web/fundamentals/push-notifications/web-push-protocol#response_from_push_service
-            error_points = 0 # default for 401, 413, 429, 500, 503...
-            if response['code'] == 301:
-                error_points = 3
-            elif response['code'] in (404, 410):
+    def __vapid_push_service_response_to_errors(self, response_status):
+        # For non-success responses, an extended error code object will be returned
+        # http://autopush.readthedocs.io/en/latest/http.html#response
+        # https://developers.google.com/web/fundamentals/push-notifications/web-push-protocol#response_from_push_service
+        if response_status >= 300:  # we have an error
+            error_points = 0  # default for 401, 413, 429, 500, 503...
+            if response_status == 301:
+                error_points = 1
+            elif response_status in (404, 410,):
                 error_points = 15
             if error_points:
                 self.errors_accounting(error_points).save()
@@ -145,8 +140,8 @@ class BaseSubscription(models.Model):
                 self.errors_accounting(-1).save()
         return self
     
-    def __fcm_push_service_response_to_errors(self, response):
-        response_result = response['results'][0]  # part we need
+    def __fcm_push_service_response_to_errors(self, response_body):
+        response_result = json.loads(response_body)['results'][0]  # part we need
         # ok, decrease error counter
         if 'message_id' in response_result:
             if self.errors > 0:
@@ -165,7 +160,7 @@ class BaseSubscription(models.Model):
                 self.endpoint = new_endpoint
                 try:
                     self.save()
-                except IntegrityError as e:
+                except IntegrityError:
                     # Duplicate entry for endpoint - new canonical endpoint
                     # is already stored in the DB 
                     pass
