@@ -3,7 +3,7 @@
 *.log
 .svn
 __pycache__
-dist
+dist/
 django_infopush.egg-info/
 0_copy.sh
 *.komodoproject
