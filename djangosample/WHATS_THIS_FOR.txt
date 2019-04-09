@@ -1,0 +1,1 @@
+This is a sample minimal django project to run tests with tox using it.
