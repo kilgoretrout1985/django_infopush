@@ -1,6 +1,6 @@
 1.7.4:
 
-    - Max length of endpoint is 512 chars now instead of 255 (some endpoint don't feet to 255). Do not forget to run migrate.
+    - Max length of endpoint is 512 chars now instead of 255 (some endpoint don't fit to 255). Do not forget to run migrate.
     - MySQL users, please read docs/MYSQL.rst! Your project needs some additional setup.
 
 1.7.3:
