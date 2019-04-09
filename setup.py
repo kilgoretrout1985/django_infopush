@@ -18,6 +18,7 @@ setuptools.setup(
     description='Django reusable app, what allows to send web push.',
     long_description=README,
     long_description_content_type="text/x-rst",
+    keywords='push webpush notifications fcm gcm vapid django reusable application app',
     author='Yuriy Zemskov',
     author_email='zemskyura@gmail.com',
     url='https://github.com/kilgoretrout1985/django_infopush',
@@ -44,4 +45,3 @@ setuptools.setup(
         'pywebpush>=1.9.2',  # payload encryption
     ]
 )
-
