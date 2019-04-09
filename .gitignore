@@ -3,6 +3,7 @@
 *.log
 .svn
 __pycache__
+.tox/
 dist/
 django_infopush.egg-info/
 0_copy.sh
