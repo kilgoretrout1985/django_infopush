@@ -31,7 +31,7 @@ def _timezone_now():
 class BaseSubscription(models.Model):
     """Base class for push subscriptions"""
     
-    endpoint = models.CharField(_('endpoint'), max_length=255, unique=True, editable=False)
+    endpoint = models.CharField(_('endpoint'), max_length=512, unique=True, editable=False)
     key = models.CharField(_('key'), max_length=255, blank=True, default='', editable=False)
     auth_secret = models.CharField(_('auth secret'), max_length=255, blank=True, default='', editable=False)
     is_active = models.BooleanField(_('is active'), default=True, db_index=True)

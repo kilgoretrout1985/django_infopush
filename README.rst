@@ -30,7 +30,7 @@ task in the admin and job is done.
 Quick start
 -----------
 
-1. `pip install django_infopush`
+1. `pip install django-infopush`
 
 2. Add "commonstuff" and "push" to your INSTALLED_APPS setting like this::
 
@@ -61,9 +61,18 @@ Quick start
    <https://github.com/kilgoretrout1985/django_infopush/blob/master/docs/SETTINGS.rst>`_
    for more.
 
-5. Run `python manage.py migrate` to create push models.
+5. **If** project uses MySQL, make sure it's version is 5.7.7 or greater
+   and add the following line to project's settings.py::
 
-6. Include URLconf in your project urls.py like this::
+    SILENCED_SYSTEM_CHECKS = ['mysql.E001']
+
+   See `docs/MYSQL.rst
+   <https://github.com/kilgoretrout1985/django_infopush/blob/master/docs/MYSQL.rst>`_
+   for details.
+
+6. Run `python manage.py migrate` to create push models.
+
+7. Include URLconf in your project urls.py like this::
 
     from django.conf.urls import url, include
     from django.conf import settings
@@ -79,15 +88,16 @@ Quick start
         )), name='service-worker.js'),
     ]
 
-7. Add `{% include 'push/_head_include.html' %}` into head-section of your
+8. Add `{% include 'push/_head_include.html' %}` into head-section of your
    django-project's html template(s). Do not include it on the pages where you
-   don't want to see push-subscribe browser window. Visit your website to become
-   first subscriber (currently Chrome and FF support webpush, not Safari).
+   don't want to see push-subscribe browser window. Visit your website to
+   become first subscriber (currently Chrome and FF support webpush, not
+   Safari).
 
-8. Visit http://127.0.0.1:8000/admin/push/ to create first push task.
+9. Visit http://127.0.0.1:8000/admin/push/ to create first push task.
 
-9. CRON setup for `python manage.py pushsend` management command
-   (every 5-10 minutes). You can also run this command manually for testing
-   purposes.
+10. CRON setup for `python manage.py pushsend` management command
+    (every 5-10 minutes). You can also run this command manually for testing
+    purposes.
 
-10. (OPTIONAL) Run `python manage.py test push` for basic check of the app.
+11. (OPTIONAL) Run `python manage.py test push` for basic check of the app.
