@@ -11,6 +11,7 @@ from django.urls import reverse
 from django.conf import settings
 from django.utils import translation, timezone
 from django.utils.six import StringIO
+from django.utils.six.moves.urllib.parse import urlsplit, urlunsplit
 from django.contrib.sites.models import Site
 #from django.contrib.auth import get_user_model
 from django.core.management import call_command
@@ -115,7 +116,11 @@ class PushTests(TestCase):
                              timezone.now()-timedelta(days=3),
                              timezone.now(), timezone.now())
         response = self.client.get(reverse('push_show_notification', args=[obj.id,]))
-        self.assertRedirects(response, obj.url+'?from=push')
+        # assertion needs relative urls in django 2.x
+        url_parts = list(urlsplit(obj.url+'?from=push'))
+        url_parts[0] = url_parts[1] = ''
+        relative_obj_url = urlunsplit(url_parts)
+        self.assertRedirects(response, relative_obj_url)
         # show notification increases clicks counter
         obj.refresh_from_db()
         self.assertEqual(obj.clicks, 1)
