@@ -1,3 +1,7 @@
+1.7.5:
+
+    - Reassembled pypi package as it now supports multiple Django versions.
+
 1.7.4:
 
     - Max length of endpoint is 512 chars now instead of 255 (some endpoint don't fit to 255). Do not forget to run migrate.

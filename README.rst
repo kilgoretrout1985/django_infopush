@@ -22,10 +22,12 @@ task in the admin and job is done.
 .. image:: https://raw.githubusercontent.com/kilgoretrout1985/django_infopush/master/docs/img/push_admin_add_thumb.png
    :target: https://raw.githubusercontent.com/kilgoretrout1985/django_infopush/master/docs/img/push_admin_add.png
 
-**Known limitations are:**
+**Known limitations:**
 
-* Tested only on Django 1.11 LTS.
-* You better have access to CRON on your server, because push tasks are send using `python manage.py pushsend` management command. And running it manually every time sounds like a bad idea. Although for testing purposes manual calls will do well.
+* You better have access to CRON on your server, because push tasks are send
+  using `python manage.py pushsend` management command. And running it manually
+  every time sounds like a bad idea. Although for testing purposes manual calls
+  will do well.
 
 Quick start
 -----------
