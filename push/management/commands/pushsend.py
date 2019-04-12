@@ -162,15 +162,12 @@ class Command(BaseCommand):
                     continue  # next pack if no active subscribers in this one
                 
                 max_workers = min(PUSHSEND_WORKERS, len(active_subscriptions))
-                per_worker = [ active_subscriptions[i::max_workers] for i in range(max_workers) ]
-                active_subscriptions = None
-                
                 pool_data = []
-                for subscr_chunk in per_worker:
+                for i in range(max_workers):
                     pool_data.append(
                         (
                             # different for each worker
-                            subscr_chunk,
+                            active_subscriptions[i::max_workers],
                             # common
                             json.dumps( task.get_payload() ),
                             self.TTL,
@@ -179,8 +176,8 @@ class Command(BaseCommand):
                             VAPID_ADMIN_EMAIL,
                         )
                     )
-                per_worker = None
-                
+                active_subscriptions = None
+
                 if max_workers == 1:
                     responses, exceptions = send_push_worker(pool_data[0])
                 else:
