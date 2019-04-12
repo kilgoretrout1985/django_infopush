@@ -1,6 +1,4 @@
-- Maybe defend notification_plus_one view from request forgery and add cache
+* Maybe defend notification_plus_one view from request forgery and add cache
 to it to lower impact on DB.
 
-- Maybe change from CRON + management command to some hipster stuff.
-
-- Translate comments in code into English.
+* Maybe change from CRON + management command to some hipster stuff.
