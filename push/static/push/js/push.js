@@ -55,12 +55,15 @@
                     push_is_enabled = true;
                 }
             } else if (!pushButton && !getCookie('push_dnd')) {
-                // на странице где есть кнопка управления, автомата нет
-                // кука значит, чел. уже подписывался и, видимо, отписался
+                // 1) On the page with "push button" there is no automatic  
+                // push-subscribe window.
+                // 2) Cookie means that user was subscribed and is unsubscribed
+                // now. So do not disturb him, as cookie name says.
                 
-                // если чел. не подписан, спросим его об этом автоматически
-                // задержка, чтобы не сразу все вываливтаь на пользователя -
-                // дадим освоиться на странице и отсеем тех, кто сразу уходит
+                // Automatic push-subscribe window has 12 seconds delay to 
+                // give the user time to get comfortable on the page and 
+                // filter out those who leave immediately
+                // TODO: make this time configurable
                 console.debug('No subscription, need to push_subscribe()');
                 setTimeout(function() { push_subscribe(); }, 12000);
             }
@@ -195,10 +198,9 @@
         var timezone = find_timezone();
         var hash = push_hash(endpoint, key, auth_secret, timezone);
         if (hash == getCookie('push_hash')) {
-            // На каждом запросе, есди чел. подписан, мы получаем его
-            // id подписки. Он может измениться, если юзер отписался
-            // и переподписался сам через браузер. Соответственно проверка, что
-            // на сервере и так актуальная инфа, чтобы не мучать его запросами.
+            // On each request we ask user's browser for push endpoint (which
+            // can change over time but normally does not). Check that backend 
+            // has actual info without additional quering it every time.
             console.log('Subscription already actual, save not needed.');
             return true;
         }

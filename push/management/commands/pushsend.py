@@ -24,8 +24,8 @@ from push.settings import FCM_SERVER_KEY, PUSHSEND_WORKERS, VAPID_PRIVATE_KEY,\
                           VAPID_ADMIN_EMAIL
 
 
-# функция должна быть вынесена из класса, чтобы запускаться в Pool
-# параметр она получает только один (в нашем случае tuple со всеми данными)
+# must be top level function to be used in Pool
+# receives only 1 param (tuple with all data)
 def send_push_worker(data):
     (
         subscr_list,
@@ -73,17 +73,15 @@ def send_push_worker(data):
 
 
 class Command(BaseCommand):
-    """Рассылает push-уведомления по крону"""
+    """Command that sends push notifications"""
     
     help = 'Pushes notification to web-subscribers (cron use only)'
     
-    DB_LIMIT = 7000  # чтобы не сожрало память, подписчики из базы выбираются по X штук
-    # Время жизни сообщения (int секунд).
-    # None - поле вообще не будет задаваться нами для сообщения.
-    # 0 - для Mozilla это, кажется, сразу убирать уведомление после получения.
-    # FCM утверждает, что максимальное время у них 4 недели.
-    # для VAPID 86400 секунд - это макс по стандарту
-    TTL = 86400 - 1  # Пока так (больше и не нужно по факту)
+    DB_LIMIT = 7000  # get subscribers objs from DB by X at a time
+    # Notification time to live (int seconds).
+    # Google FCM has max ttl of 4 weeks.
+    # For VAPID maximum is 86400 seconds (24 hours).
+    TTL = 86400 - 1
 
     start_time = None
     pid_lock = None
@@ -145,37 +143,35 @@ class Command(BaseCommand):
                 task.save(update_fields=['started_at'])
             
             # subscribers
-            # Не можем отфильтровать здесь по is_active=True, т.к. сразу после
-            # отправки в случае определенных ошибок выключаем часть подписок.
-            # Это сдвигает срез выборки по active и тогда у пограничных между
-            # пачками будет двойная рассылка. Поэтому отфильтруем активные перед
-            # отправкой средствами питона, а не БД (вообще надо будет переделать).
+            # can't filter by is_active=True, because after sending each pack
+            # we disable erroneous subscriptions and this shifts the slice 
+            # if only active objects selected.
+            # TODO: This definitely needs optimisation some day.
             qs = DigestSubscription.objects \
                     .filter(timezone=tz_layout.timezone) \
                     .order_by('id')
             
             # send
             max_i = qs.count()
-            # выбираем пачками из БД, чтобы объекты не пожрали память
+            # no more than DB_LIMIT objects at a time to save RAM
             for i in range(0, max_i, self.DB_LIMIT):
                 subscriptions = qs[i:(i+self.DB_LIMIT)]
                 active_subscriptions = [ s for s in subscriptions if s.is_active ]
-                subscriptions = None  # освободить память
+                subscriptions = None
                 if not active_subscriptions:
                     continue  # next pack if no active subscribers in this one
                 
-                # разбиваем на кол-во частей или по кол-ву подписок, если их меньше чем ядер
                 max_workers = min(PUSHSEND_WORKERS, len(active_subscriptions))
                 per_worker = [ active_subscriptions[i::max_workers] for i in range(max_workers) ]
-                active_subscriptions = None  # освобождаем память
+                active_subscriptions = None
                 
                 pool_data = []
                 for subscr_chunk in per_worker:
                     pool_data.append(
                         (
-                            # различаются
+                            # different for each worker
                             subscr_chunk,
-                            # общие для всех вызовов
+                            # common
                             json.dumps( task.get_payload() ),
                             self.TTL,
                             FCM_SERVER_KEY,
@@ -183,7 +179,7 @@ class Command(BaseCommand):
                             VAPID_ADMIN_EMAIL,
                         )
                     )
-                per_worker = None  # освобождаем память
+                per_worker = None
                 
                 if max_workers == 1:
                     responses, exceptions = send_push_worker(pool_data[0])
@@ -245,22 +241,19 @@ class Command(BaseCommand):
     
     def clean_push_db(self):
         """
-        Чистка старых tzl и неактивных подписок, чтобы таблица не разросталась.
+        Deletes old push task tzl and old in_active subscribers (db clean-up).
         """
         if randint(0, 299):
             return
         
-        # Старые tzl занимают место и раздувают таблицу (по которой активно
-        # идет поиск во вьюхе last_notification). Единственная инфа, которую мы
-        # берем оттуда это время, потраченное на рассылку, но она нужна только
-        # для актуальных заданий и не имеет ценности для старья.
+        # Old tzls are almost useless. We only count task sending time on 
+        # them, but this info is only needed for actual push tasks.
         tasks = Task.public_objects.filter(done_at__lt=( timezone.now() - timedelta(days=90) ))
         for task in tasks:
             task.timezonelayout_set.all().delete()
         
-        # т.к. мы перебираем все подписки, а не только активные, то старые записи
-        # скорее всего серьезно замедляют рассылку (но все не удаляем, чтобы можно
-        # было собрать статистику при необходимости)
+        # Delete only subscriptions that are inactive more than 1 year. 
+        # Fresher subscriptions are left for statistics.
         DigestSubscription.objects.filter(
             is_active=False,
             deactivated_at__lt=( timezone.now() - timedelta(days=365) )
