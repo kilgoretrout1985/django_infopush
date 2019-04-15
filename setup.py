@@ -11,7 +11,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setuptools.setup(
     name='django_infopush',
-    version='1.7.5',
+    version='1.7.6',
     packages=setuptools.find_packages(),  # ['push'],
     include_package_data=True,
     license='MIT',
@@ -44,6 +44,6 @@ setuptools.setup(
         'django-commonstuff>=0.8.8',
         'pytz>=2018.3',
         'Pillow>=4.3.0',  # for dimensions on image upload
-        'pywebpush>=1.9.2',  # payload encryption
+        'pywebpush>=1.9.3',  # payload encryption
     ]
 )

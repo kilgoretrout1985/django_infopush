@@ -1,3 +1,7 @@
+1.7.6:
+
+    - Reassembled pypi package because of small but important change in pywebpush library it depends on (Google GCM endpoint, which will stop working on May 29th, replaced with FCM endpoint).
+
 1.7.5:
 
     - Reassembled pypi package as it now supports multiple Django versions.
