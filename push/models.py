@@ -3,7 +3,7 @@ from __future__ import unicode_literals, absolute_import, division, print_functi
 
 import pytz
 
-from django.utils.six.moves.urllib.parse import urlparse, urlunparse, parse_qs,\
+from six.moves.urllib.parse import urlparse, urlunparse, parse_qs,\
                                                 urlencode
 import json
 from datetime import timedelta
@@ -16,7 +16,7 @@ from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from django.utils.encoding import python_2_unicode_compatible
+from six import python_2_unicode_compatible
 
 from commonstuff.models_base import ModelWith2Images
 

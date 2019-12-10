@@ -2,7 +2,7 @@
 from __future__ import unicode_literals, absolute_import, division, print_function
 
 import re
-from django.utils.six.moves import urllib
+from six.moves import urllib
 from datetime import timedelta
 
 from PIL import Image

@@ -10,8 +10,8 @@ from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.conf import settings
 from django.utils import translation, timezone
-from django.utils.six import StringIO
-from django.utils.six.moves.urllib.parse import urlsplit, urlunsplit
+from six import StringIO
+from six.moves.urllib.parse import urlsplit, urlunsplit
 from django.contrib.sites.models import Site
 #from django.contrib.auth import get_user_model
 from django.core.management import call_command

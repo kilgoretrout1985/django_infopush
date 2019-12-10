@@ -11,7 +11,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setuptools.setup(
     name='django_infopush',
-    version='1.7.6',
+    version='1.7.7',
     packages=setuptools.find_packages(),  # ['push'],
     include_package_data=True,
     license='MIT',
@@ -27,6 +27,7 @@ setuptools.setup(
         'Framework :: Django',
         'Framework :: Django :: 1.11',
         'Framework :: Django :: 2.2',
+        'Framework :: Django :: 3.0',
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
@@ -40,10 +41,14 @@ setuptools.setup(
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
     install_requires=[
-        'Django>=1.11,<2.3',
-        'django-commonstuff>=0.8.8',
+        'Django>=1.11,<3.1',
+        'django-commonstuff>=0.8.10',
         'pytz>=2018.3',
         'Pillow>=4.3.0',  # for dimensions on image upload
         'pywebpush>=1.9.3',  # payload encryption
+        # for simultaneous support of Django 1.11 on Python 2.7 and Django 3.0
+        # remove six dependency as soon as Django 1.11 and Python 2.7 both end
+        # their lifecycle
+        'six>=1.12.0',
     ]
 )
