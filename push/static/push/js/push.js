@@ -115,7 +115,7 @@
             // and save it to send a push message at a later date
             push_save_on_server(subscription);
             // delete "do not disturb" cookie
-            setCookie('push_dnd', '', {expires: -86400, path: '/'});
+            setCookie('push_dnd', '', {expires: -86400, path: '/', samesite: 'lax'});
         })
         .catch(function(e) {
             if ('Notification' in window && window.Notification &&
@@ -222,7 +222,7 @@
         fetch(request)
         .then(function(response) {
             if(response.ok) {
-                setCookie('push_hash', hash, {expires: 7*24*3600, path: '/'});
+                setCookie('push_hash', hash, {expires: 7*24*3600, path: '/', samesite: 'lax'});
                 console.log('Successfully saved subscription.');
             } else {
                 console.warn('Network response on subscription save was not ok.', response);
@@ -295,7 +295,7 @@
                 // the subscription from your data store so you
                 // don't attempt to send them push messages anymore
                 push_deactivate_on_server(subscription);
-                setCookie('push_dnd', '1', {expires: 365*86400, path: '/'});
+                setCookie('push_dnd', '1', {expires: 365*86400, path: '/', samesite: 'lax'});
                 pushButton.disabled = false;
                 pushButton.textContent = django_infopush_js_dynamic_vars.on_button_label;
                 push_is_enabled = false;

@@ -1,3 +1,7 @@
+1.7.9:
+
+    - SameSite=Lax attribute for cookies set by the app (https://developer.mozilla.org/ru/docs/Web/HTTP/Headers/Set-Cookie/SameSite).
+
 1.7.8:
 
     - Minor technical update due to pytz dependency update and new migration because of it.
