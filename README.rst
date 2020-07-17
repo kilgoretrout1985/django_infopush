@@ -34,10 +34,12 @@ Quick start
 
 1. `pip install django-infopush`
 
-2. Add "commonstuff" and "push" to your INSTALLED_APPS setting like this::
+2. Add "django.contrib.humanize" (if not in INSTALLED_APPS already) and 
+   "commonstuff", "push" to your INSTALLED_APPS setting like this::
 
     INSTALLED_APPS = [
         # ...
+        'django.contrib.humanize',
         'commonstuff',
         'push',
     ]
