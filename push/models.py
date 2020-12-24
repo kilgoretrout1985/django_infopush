@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals, absolute_import, division, print_function
-
 import pytz
 
-from six.moves.urllib.parse import urlparse, urlunparse, parse_qs,\
-                                                urlencode
+from urllib.parse import urlparse, urlunparse, parse_qs
+from urllib.parse import urlencode
 import json
 from datetime import timedelta
 
@@ -16,7 +14,6 @@ from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from six import python_2_unicode_compatible
 
 from commonstuff.models_base import ModelWith2Images
 
@@ -180,7 +177,6 @@ class BaseSubscription(models.Model):
         return self
 
 
-@python_2_unicode_compatible
 class DigestSubscription(BaseSubscription):
     """Digest push subscription (the only actual subscription type for now)"""
     
@@ -200,7 +196,6 @@ class PublicTaskManager(models.Manager):
                     .exclude(started_at__isnull=True)
 
 
-@python_2_unicode_compatible
 class Task(ModelWith2Images):
     """Push tasks (the task here is to send something to push subscribers)"""
     
@@ -384,7 +379,6 @@ class PublicTZLManager(models.Manager):
                     .order_by('-run_at')
 
 
-@python_2_unicode_compatible
 class TimezoneLayout(models.Model):
     """
     Push task sub-tasks by timezone

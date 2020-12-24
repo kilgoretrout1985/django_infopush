@@ -11,7 +11,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setuptools.setup(
     name='django_infopush',
-    version='1.7.9',
+    version='1.8',
     packages=setuptools.find_packages(),  # ['push'],
     include_package_data=True,
     license='MIT',
@@ -31,8 +31,6 @@ setuptools.setup(
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
@@ -42,13 +40,9 @@ setuptools.setup(
     ],
     install_requires=[
         'Django>=1.11,<3.1',
-        'django-commonstuff>=0.8.10',
+        'django-commonstuff>=0.9',
         'pytz>=2020.1',
         'Pillow>=4.3.0',  # for dimensions on image upload
         'pywebpush>=1.9.3',  # payload encryption
-        # for simultaneous support of Django 1.11 on Python 2.7 and Django 3.0
-        # remove six dependency as soon as Django 1.11 and Python 2.7 both end
-        # their lifecycle
-        'six>=1.12.0',
     ]
 )

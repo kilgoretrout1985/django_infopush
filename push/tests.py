@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals, absolute_import, division, print_function
-
 import string
 import random
 from unittest import skipUnless
@@ -10,10 +7,9 @@ from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.conf import settings
 from django.utils import translation, timezone
-from six import StringIO
-from six.moves.urllib.parse import urlsplit, urlunsplit
+from io import StringIO
+from urllib.parse import urlsplit, urlunsplit
 from django.contrib.sites.models import Site
-#from django.contrib.auth import get_user_model
 from django.core.management import call_command
 
 from .settings import GCM_URL, FCM_SENDER_ID
@@ -21,12 +17,7 @@ from .models import DigestSubscription, Task
 
 
 def __fake_letters(length=10):
-    letters = string.ascii_letters + string.digits
-    letters_len = len(letters)
-    s = []
-    for i in range(length):
-        s.append(letters[ random.randint(0, letters_len-1) ])
-    return ''.join(s)
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
 
 
 def _new_subscription_obj_for_test(is_active=True):
@@ -138,23 +129,3 @@ class PushTests(TestCase):
         self.assertTrue(task.done_at is not None)
         self.assertTrue(task.started_at is not None)
     
-    # @skipUnless(settings.SITE_ID, "Can't generate push-task obj without sites framework.")
-    # def test_task_admin_form(self):
-    #     # enter /admin (superuser so we don't have to bother with permissions)
-    #     user = get_user_model().objects.create_superuser(
-    #         'username', 'admin@localhost', 'password123'
-    #     )
-    #     self.client.force_login(user)
-    #     response = self.client.post(
-    #         reverse('admin:push_task_add'), 
-    #         {
-    #             'title': 'push title',
-    #             'message': 'push message',
-    #             'url': '/',
-    #             'run_at': timezone.now(),
-    #         }
-    #     )
-    #     self.assertEqual(response.status_code, 200)
-    #     # total 1 task should be in test DB now
-    #     self.assertEqual(Task.objects.count(), 1)
-    #     self.client.logout()

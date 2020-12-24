@@ -1,3 +1,7 @@
+1.8:
+
+    - Droped Python 2 support.
+
 1.7.9:
 
     - SameSite=Lax attribute for cookies set by the app (https://developer.mozilla.org/ru/docs/Web/HTTP/Headers/Set-Cookie/SameSite).

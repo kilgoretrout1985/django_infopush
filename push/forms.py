@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals, absolute_import, division, print_function
-
 import re
-from six.moves import urllib
+import urllib.request, urllib.parse, urllib.error
 from datetime import timedelta
 
 from PIL import Image

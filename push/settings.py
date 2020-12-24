@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals, absolute_import, division, print_function
-
 from django.conf import settings
 
 VAPID_PUBLIC_KEY = getattr(settings, 'DJANGO_INFOPUSH_VAPID_PUBLIC_KEY', '')
