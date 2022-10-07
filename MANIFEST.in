@@ -13,3 +13,4 @@ global-exclude *.pyc
 global-exclude *.pyo
 global-exclude __pycache__
 global-exclude .svn
+global-exclude .git

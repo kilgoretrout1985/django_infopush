@@ -9,7 +9,7 @@ from django import forms
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.template.defaultfilters import filesizeformat
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 from .models import Task
 from .settings import MIN_ICON_H, MIN_ICON_W, ICON_CUSTOM_MAX_FILESIZE, \

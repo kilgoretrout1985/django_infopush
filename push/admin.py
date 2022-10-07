@@ -2,7 +2,7 @@
 from django.contrib import admin
 from django.contrib.admin.views.main import ChangeList
 from django.db.models import Sum
-from django.utils.translation import ugettext_lazy as _, ungettext
+from django.utils.translation import gettext_lazy as _, ngettext
 
 from commonstuff.filters import MyDateListFilterNoFuture, MyDateListFilter
 
@@ -90,13 +90,13 @@ class TaskAdmin(admin.ModelAdmin):
                 counter += 1
         if counter:
             if activate:
-                msg = ungettext(
+                msg = ngettext(
                     'Successfully activated %(count)d task.',
                     'Successfully activated %(count)d tasks.',
                     counter
                 ) % {'count': counter}
             else:
-                msg = ungettext(
+                msg = ngettext(
                     'Successfully deactivated %(count)d task.',
                     'Successfully deactivated %(count)d tasks.',
                     counter
